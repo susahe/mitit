@@ -11,7 +11,7 @@ class Home extends BaseController
 {
 				// class attributes
 
-				private $model;
+				private $user_model;
 				private $curd;
 
 				// consturct
@@ -22,8 +22,8 @@ class Home extends BaseController
 					helper('date');
 
 					// create models from model classes
-					$this->model = new UserModel();
-					$this->curd = new Curd();
+					$this->user_model = new UserModel();
+
 				}
 
 
@@ -41,12 +41,12 @@ class Home extends BaseController
 				private function setUserSession($user){
 
 							$data=[
-											'id'=>$user['id'],
+											'id'=>$user['user_id_pk'],
 											'firstname'=>$user['firstname'],
 											'lastname'=>$user['lastname'],
 											'email'=>$user['email'],
 											'isLogedIn' => true,
-											'loginUser'=>$user['role'],
+											'loginUser'=>$user['user_role'],
 										];
 							session()->set($data);
 							return true;
@@ -78,10 +78,9 @@ class Home extends BaseController
 					 }
 					 else
 					 {
-			  			 $user= 	$this->model->where('email',$this->request->getVar('email'))
-														 ->first();
-							 $id = $user['id'];
-			  			 $this->curd->update_lastlogin($id,$this->model);
+			  			 $user= $this->user_model->getuser_from_email($this->request->getVar('email'));
+							 $id = $user['user_id_pk'];
+			  			// $this->curd->update_lastlogin($id,$this->user_model);
     					 $this->setUserSession($user);
 							 return redirect()->to('/dashboard');
 				 	 	}

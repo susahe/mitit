@@ -2,6 +2,11 @@
 <?= $this->Section('content') ?>
 <div class="row">
 <div class="col-12 col-sm-12">
+  <?php if (session()->get('sucess')): ?>
+    <div class="alert alert-danger" role="alert">
+        <?= session()->get('sucess')?>
+    </div>
+  <?php endif; ?>
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
 <h3 > <?= $guest_user['firstname']." ".$guest_user['lastname']?>'s Dash Board  </h3>
 <small> <?php  if($is_application_submited) {
@@ -12,6 +17,13 @@ else{
 }
 ?></small>
 </div>
+<div class="row">
+
+
+
+</div>
+
+
 <div class='row'>
 <div class="col-12 col-sm-3">
 <div class="shadow-sm p-3 mb5 bg-white rounded  col-lg-12">
@@ -19,6 +31,10 @@ else{
  <h4><?= $student_reg?></h4>
 </div>
 </div>
+
+
+
+
 <div class="col-12 col-sm-3">
 <div class="shadow-sm p-3 mb-5 bg-white rounded  col-lg-12">
 <h6>Current Students</h6>

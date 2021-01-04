@@ -18,6 +18,7 @@ public function create($rules,$newdata,$model)
 
               if (! $this->validate($rules))
                          {
+
                                      $data['validation']= $this->validator;
                          }
             else
@@ -56,13 +57,13 @@ public function create($rules,$newdata,$model)
 
 
 // Activate or Deactivate Objects
-public function change_status($id,$stat,$message,$model)
+public function change_status($id,$tbl_id,$stat,$model)
     {
         $newdata=[];
          if ($stat==0){
          $newdata =
                  [
-                   'id'  =>$id ,
+                   $tbl_id  =>$id ,
                  'status'=>1,
                    'update' => date('Y-m-d H:i:s',now()),
                  ];
@@ -71,32 +72,32 @@ public function change_status($id,$stat,$message,$model)
 
              $newdata =
                      [
-                       'id'  =>$id ,
+                       $tbl_id  =>$id ,
                      'status'=>0,
                        'update' => date('Y-m-d H:i:s',now()),
                      ];
 
         }
                   $model->save($newdata);
-                  session()->setFlashdata('sucess', $message);
+
 
       }
 
-      public function update_lastlogin($id,$model)
+      public function update_lastlogin($id,$tbl_id,$stat,$model)
           {
               $newdata=[];
 
 
                $newdata =
                        [
-                         'id'  =>$id,
+                        $tbl_id =>$id,
                          'lastlogin' => date('Y-m-d H:i:s',now()),
 
                        ];
 
 
                         $model->save($newdata);
-                        session()->setFlashdata('sucess');
+
 
             }
 

@@ -25,7 +25,7 @@ protected $validationMessages = [
   'adresss' => ['required'=>'Sorry you are not allowed to move foward'],
   'days' => ['required' =>'this is needed'],
   'time'=> ['required'=>'this is must field'],
-
+	'mobile'=> 'required|min_length[10]|max_length[10]|valid_phone_number[mobile]|is_unique[users.mobile]',
 
 ];
 

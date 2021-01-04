@@ -8,24 +8,21 @@ use CodeIgniter\Model;
 class UserModel extends Model
   {
 
-    protected $table ='users';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['email','password','role','firstname','lastname','slug','mobile','status','update','lastlogin','username'];
+    protected $table ='tbl_users';
+    protected $primaryKey = 'user_id_pk';
+    protected $allowedFields = ['email','password','user_role','firstname','lastname','slug','mobile','status','created','update','lastlogin','user_name'];
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];
 
 
-
-
-
-
+    // before insert  change the field
     protected function beforeInsert(array $data)
       {
           $data = $this->passwordHash($data);
           return $data;
       }
 
-
+      // before update  change the field
     protected function beforeUpdate(array $data)
       {
 
@@ -33,7 +30,7 @@ class UserModel extends Model
        return $data;
       }
 
-
+      // haspassword
     protected function passwordHash(array $data)
       {
         if(isset($data['data']['password']))
@@ -41,76 +38,27 @@ class UserModel extends Model
         return $data;
       }
 
-
-      public function getusers($slug = false)
+      // get user form his or him email
+      public function getuser_from_email($email)
       {
-          if ($slug === false)
+          if ($email)
           {
-              return $this->findAll();
-          }
-          return $this->asArray()
-                      ->where(['slug' => $slug])
+
+                 return $this->asArray()->select('user_id_pk,email,status,firstname,lastname,user_role')
+                      ->where(['email' => $email])
                       ->first();
        }
-
-       public function getuser_from_email($email)
-       {
-           if ($email)
-           {
-
-                  return $this->asArray()->select('id,email,status,firstname,lastname')
-                       ->where(['email' => $email])
-                       ->first();
-        }
-      }
-
-       public function getUserStatusById($id){
-
-          return $this->db->table($this->table)
-                ->where('id',$id)
-                ->get()
-                ->getRow();
-
-       }
-
-       public function update_lastlogin(array $data)
-       {
+     }
 
 
-       }
+     public function getuser_from_id($id)
+     {
+         if ($id)
+         {
 
-       // create personal details
-       public function personal_details_add()
-       {
-
-       }
-
-       // update person details
-       public function personal_details_edit()
-       {
-
-       }
-
-
-       public function getuser_from_id($id)
-       {
-           if ($id)
-           {
-
-                  return $this->asArray()->select('id,email,status,firstname,lastname')
-                       ->where(['id' => $id])
-                       ->first();
-        }}
-
-
-        public function getUserById($id){
-          if($id){
-            return $this->asArray()->select('id,username,status,role,created,lastlogin,email,update,firstname,lastname,slug,mobile')
-                 ->where(['id' => $id])
-                 ->first();
-          }
-
-        }
-
+                return $this->asArray()->select('user_id_pk,email,status,user_role,firstname,lastname')
+                     ->where(['user_id_pk' => $id])
+                     ->first();
+      }}
 
   }

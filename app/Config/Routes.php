@@ -47,6 +47,15 @@ $routes->get('logout', 'Home::logout',['filter'=>'auth']);
 $routes->get('/dashboard', 'Dashboard::index',['filter'=>'auth']);
 $routes->match(['get','post'],'/course_select/(:num)', 'Dashboard::course_select/$1');
 
+//-----------------------------
+// Person profile
+//------------------------------
+$routes->get('/create_person_profile', 'Users::create_person_profile',['filter'=>'auth']);
+$routes->match(['get','post'],'/profile_person_view', 'Users::profile_person_view',['filter'=>'auth']);
+
+
+
+
 //----------------------------
 // Guest
 //---------------------------
@@ -72,6 +81,8 @@ $routes->get('user_profile_view/(:segment)', 'Users::view_profile/$1',['filter'=
 // Users -> Students  routes
 //----------------------------
 
+
+$routes->get('/create_student_profile/(:num)', 'Students::create_student_profile/$1',['filter'=>'auth']);
 
 $routes->get('/apply_course/(:num)', 'Students::apply_course/$1',['filter'=>'auth']);
 $routes->get('/view_users', 'Users::index',['filter'=>'auth']);

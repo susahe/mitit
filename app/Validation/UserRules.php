@@ -16,10 +16,10 @@ class UserRules {
   public function is_activativation_key_available(string $str, string $fields, array $data):bool
   {
     $model = new UserModel();
-    $user = $model->select('id,email')
+    $user = $model->select('user_id_pk,email')
           ->where('email',$data['email'])
           ->first();
-    $user_id = $user['id'];
+    $user_id = $user['user_id_pk'];
     $myTime = new Time('now');
     $time = Time::parse($myTime);
     $number = sprintf('%04d',$user_id);

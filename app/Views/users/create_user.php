@@ -50,13 +50,7 @@
 
 						</div>
 
-						<div class="col-12 col-sm-6">
-							<div class="form-group">
-
-								<input type="tel" class="form-control" name ="mobile" id="mobile" value="<?= set_value('mobile');?>" placeholder="Mobile No "  pattern="[0-9]{3}[0-9]{7}" required>
-								<small>Format: 0774567890</small>
-							</div>
-						</div>
+						
 
 						<?php if (isset($validation)): ?>
 						<div class="col-12">
