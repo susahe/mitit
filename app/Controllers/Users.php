@@ -288,7 +288,7 @@ class Users extends BaseController
 														if  (($this->request->getVar('activatekey')==$preregid)&& $this->request->getVar('email')==$data['user']['email']){
 																$this->curd->change_status($user_id,$tblid="user_id_pk",$status=0,$this->user_model);
 
-																echo var_dump($data);
+																//echo var_dump($data);
 																print_r($preregid);
 
 																print_r($user_id);

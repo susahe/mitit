@@ -1,8 +1,8 @@
 <?php namespace App\Controllers;
 use App\Controllers\BaseController;
-use App\Models\Users\UserModel;
+use App\Models\User\UserModel;
 use App\Models\DaysModel;
-use App\Models\Users\ParentModel;
+use App\Models\User\ParentModel;
 use App\Models\CourseModel;
 use App\Models\EnrolModel;
 
@@ -17,7 +17,8 @@ class Parents extends BaseController
 
 				private $model;
 				private $mail;
-				private $parentmodel;
+				private $parent_model;
+				private $user_model;
 				private $curd;
 				private $csmodel;
 				private $days;
@@ -33,13 +34,13 @@ class Parents extends BaseController
 
 
 					// Using Model create Objects
-					$this->model 				= new UserModel();
-					$this->parentmodel = new ParentModel();
-					$this->csmodel = new CourseModel();
-					$this->curd = new Curd();
-					$this->mail 	= new Send_Mail();
-					$this->days = new DaysModel();
-					$this->enroll = new EnrolModel();
+					$this->parent_model 				= new ParentModel();
+					$this->user_model 				= new UserModel();
+					// $this->csmodel = new CourseModel();
+					// $this->curd = new Curd();
+					// $this->mail 	= new Send_Mail();
+					// $this->days = new DaysModel();
+					// $this->enroll = new EnrolModel();
 				}
 
 				// login
@@ -66,6 +67,37 @@ class Parents extends BaseController
 
 				}
 
+
+				public function activate_child_account($stdid)
+				{
+
+							$session= session();
+						$data['user']=$this->user_model->getuser_from_id($stdid);
+
+						$session->set('childid', $stdid);
+						$session->set('loginUser', $data['user']['user_role']);
+						$session->set('child_firstname',$data['user']['firstname']);
+						$session->set('child_lasname',$data['user']['lastname']);
+
+
+					return redirect()->to('/dashboard');
+				}
+
+
+				public function return_parent_account($parentid)
+				{
+
+						$session= session();
+						$data['user']=$this->user_model->getuser_from_id($parentid);
+
+						$session->remove('childid');
+						$session->set('loginUser', $data['user']['user_role']);
+						$session->remove('child_firstname');
+						$session->remove('child_lasname');
+
+
+					return redirect()->to('/dashboard');
+				}
 				public function view_profile($slug=null){
 				//	$model = new UserModel();
 						$data['user'] = $this->model->getusers($slug);

@@ -5,7 +5,7 @@ use App\Libraries\Send_Mail;
 use CodeIgniter\I18n\Time;
 class Courses extends BaseController
 {
-	private $model;
+	private $course_model;
 
 	private $mail;
 
@@ -14,7 +14,7 @@ class Courses extends BaseController
 	{
 		helper('form');
 		helper('date');
-		 $this->model = new CourseModel();
+		 $this->course_model = new CourseModel();
 		  $this->curd = new Curd();
 		// $this->mail = new Send_Mail();
 
@@ -23,11 +23,16 @@ class Courses extends BaseController
 	public function index()
 	{
 		$model = new CourseModel();
-	 $data['courses']= $model->findAll();
+	 $data['courses']= $this->course_model->findAll();
 		//	echo var_dump($data);
-		return  view("courses/admin/courses_view_admin",$data);
+		if(!$data['courses']){
+			$data['message'] = "There is No Course to view";
+		}
 
-		// echo view("courses/course_view",$data);
+	   return view("courses/admin/courses_view_admin",$data);
+
+		 	//return view("courses/course_view",$data);
+		
 	}
 
 	public function view_course($cslug=null){

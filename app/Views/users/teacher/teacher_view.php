@@ -28,8 +28,8 @@
   <td> <?= $user['created']?></td>
   <td> <?= $user['update']?></td>
   <td> <?= $user['address']?></td>
-  <td> <?= $user['days']?></td>
-  <td> <?= $user['time']?></td>
+
+
   <td> <?= $user['firstname']?></td>
   <td> <?= $user['lastname']?> </td>
 <?php  if ($user['status']==0){

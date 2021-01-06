@@ -38,8 +38,8 @@ class Teachers extends BaseController
 					$this->csmodel = new CourseModel();
 					$this->curd = new Curd();
 					$this->mail 	= new Send_Mail();
-					$this->days = new DaysModel();
-					$this->enroll = new EnrolModel();
+					//$this->days = new DaysModel();
+				//	$this->enroll = new EnrolModel();
 				}
 
 				// login

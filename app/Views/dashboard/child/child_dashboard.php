@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-12 col-sm-12">
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
-<h3 > <?= $_SESSION['firstname']." ".$_SESSION['lastname']?>'s Dash Board  </h3>
+<h3 > <?= $_SESSION['child_firstname']." ".$_SESSION['child_firstname']?>'s Dash Board Under your  </h3>
 
 </div>
 
@@ -25,7 +25,9 @@
 
 
 </div>
-<div>
+
+
+
 
 
 <?= $this->endSection() ?>

@@ -5,9 +5,9 @@ use CodeIgniter\Model;
 
 
 class CourseModel extends Model {
-  protected $table ='courses';
+  protected $table ='tbl_courses';
   protected $primaryKey = 'id';
-  protected $allowedFields = ['csname','cstheryhrs','cspracthrs','csassinghrs','csprojecthrs','csfees','cstype','csperyear','csslug','csduemonths','status','updated','created','courseobjective','cscode'];
+  protected $allowedFields = ['csname','cstheryhrs','cspracthrs','csassinghrs','csprojecthrs','csfees','cstype','csperyear','csslug','csduemonths','csperyear','status','updated','created','courseobjective','cscode','no_installation','teacher_id_fk','max_students'];
 
 
 
@@ -55,7 +55,6 @@ class CourseModel extends Model {
 
 
 
-
 public function getCourses($slug=null){
   if(!$slug){
     return $this->findAll();
@@ -65,6 +64,7 @@ public function getCourses($slug=null){
           ->where(['csslug'=>$slug])
           ->first();
 }
+
 function getCountCourses(){
 
 return $query = $this->countAll() ;

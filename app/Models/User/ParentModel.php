@@ -4,63 +4,47 @@ use CodeIgniter\Model;
 
 
 class ParentModel extends Model {
-  protected $table ='parent';
-  protected $primaryKey = 'id';
-  protected $allowedFields = ['id','address','user','student','created','update','slug','status'];
+  protected $table ='tbl_parent_student';
+  protected $primaryKey = 'rel_id_pk';
+  protected $allowedFields = ['prt_id_fk','std_id_fk','created','update','status'];
   //protected $beforeInsert = ['beforeInsert'];
   //protected $beforeUpdate = ['beforeUpdate'];
 
 
-
-  public function getusers($slug = false)
+  public function select_students_from_parent($p_id)
   {
-      if ($slug === false)
-      {
-          return $this->findAll();
-      }
+    if ($p_id)
+    {
 
-      return $this->asArray()
-                  ->where(['slug' => $slug])
-                  ->first();
-  }
+    //   $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.prt_id_fk','LEFT');
+    //   //  $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.prt_id_fk');
+    //   $this->select('*');
+    // //  $this->where('tbl_users.user_role','Child')
+    // //  $this->select('tbl_users.firstname,tbl_users.lastname');
+    //   //$this->select('tbl_users.firstname,tbl_users.lastname,tbl_student.address,tbl_student.gender,tbl_student.nic,tbl_student.birthdate,tbl_student.student_status');
+    // //  $this->join('tbl_users', 'tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
+    //   // $this->select('tbl_users.firstname,tbl_users.lastname');
+    //   // $this->where('tbl_parent_prt_id_fk',$p_id);
+    //   // $this->where('tbl_parent_student.std_id_fk','tbl_users.user_id_pk');
+    //   // $this->where('tbl_student.user_id','tbl_users.user_id_pk');
+    //   $this->where('tbl_parent_student.prt_id_fk',$p_id);
+    // //  $this->join('tbl_users', 'tbl_users.user_id_pk=tbl_parent_student.prt_id_fk' );
+    // //  $this->join('tbl_student', 'tbl_student.user_id= tbl_users.user_id_pk');
+    // //  $this->join('tbl_student','tbl_parent_student.std_id_fk=tbl_users.user_id_pk');
+    //   $student = $this->get()->getResultArray();
+    //   $this->distinct();
+    //   return $student;
 
-  public function getStudent($id)
-  {
-      return $this->asArray()
-                  ->where(['id'=> $id])
-                  ->first();
-  }
-
-
-
-
-
-  public function getStudents()
-  {
-
-
-  //  $builder->db->table('student');
     $this->select('*');
-    $this->join('users', 'student.id = users.id' );
+    $this->where('prt_id_fk', $p_id);
+    $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
+    $this->select('tbl_users.firstname,tbl_users.lastname');
+    $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.user_id');
+
     $student = $this->get()->getResultArray();
     return $student;
+ }}
 
 
-  }
-
-public function  get_newly_reg_students(){
-  $this->select('users.id,users.firstname,users.lastname,users.slug,student.address,student.status');
-  $this->where('student.status',0);
-  $this->join('users','student.id = users.id');
-  $new_student= $this->get()->getResultArray();
-  return $new_student;
-
-}
-
-
-public function all()
-{
-  $this->db->table('student')->get->getResult();
-}
 
 }

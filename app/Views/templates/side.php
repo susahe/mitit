@@ -146,7 +146,39 @@
    <a class="nav-link" href="/dashboard"><i class="bi bi-cast"></i> Dashboard <span class="sr-only">(current)</span></a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='profile' ? 'active' : null )?>"">
-   <a class="nav-link" href="/create_student_profile/<?=(session()->get('id'))?>"><i class="bi bi-file-person-fill"></i> Profile View</a>
+   <a class="nav-link" href="/student_profile_view/<?=(session()->get('id'))?>"><i class="bi bi-file-person-fill"></i> Profile View</a>
+ </li>
+ <li class="nav-item <?=($uri->getSegment(1)=='courses' ? 'active' : null )?>"">
+   <a class="nav-link" href="/student_courses"> <i class="bi bi-journals"></i> Courses</a>
+ </li>
+
+ <li class="nav-item <?=($uri->getSegment(1)=='student_grades' ? 'active' : null )?>"">
+   <a class="nav-link" href="/student_schedules"><i class="bi bi-journals"></i> Grades</a>
+ </li>
+
+ <li class="nav-item <?=($uri->getSegment(1)=='student_schedules' ? 'active' : null )?>"">
+   <a class="nav-link" href="/student_grades"><i class="bi bi-calendar2-minus"></i>  Schedules</a>
+ </li>
+ <li class="nav-item <?=($uri->getSegment(1)=='student_payments' ? 'active' : null )?>"">
+   <a class="nav-link" href="/student_payments"><i class="bi bi-calendar2-minus"></i>  Payments</a>
+ </li>
+ <li class="nav-item <?=($uri->getSegment(1)=='child_accounts' ? 'active' : null )?>"">
+   <a class="nav-link" href="/student_view_child_accounts"><i class="bi bi-calendar2-minus"></i>  Child Accounts</a>
+ </li>
+</ul>
+
+<ul class="navbar-nav ml-auto">
+ <li class="nav-item ">
+   <a class="nav-link" href="/logout"><i class="bi bi-door-closed"></i> Logout</a>
+ </li>
+</ul>
+<?php elseif((session()->get('isLogedIn')) && (session()->get('loginUser')=='Child')):?>
+<ul class="navbar-nav">
+ <li class="nav-item <?=($uri->getSegment(1)=='dashboard' ? 'active' : null )?>">
+   <a class="nav-link" href="/dashboard"><i class="bi bi-cast"></i> Dashboard <span class="sr-only">(current)</span></a>
+ </li>
+ <li class="nav-item <?=($uri->getSegment(1)=='profile' ? 'active' : null )?>"">
+   <a class="nav-link" href="/view_student_profile/<?=(session()->get('id'))?>"><i class="bi bi-file-person-fill"></i> Profile View</a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='courses' ? 'active' : null )?>"">
    <a class="nav-link" href="/courses"> <i class="bi bi-journals"></i> Courses</a>
@@ -163,7 +195,7 @@
 
 <ul class="navbar-nav ml-auto">
  <li class="nav-item ">
-   <a class="nav-link" href="/logout"><i class="bi bi-door-closed"></i> Logout</a>
+   <a class="nav-link" href="/return_parent_account/<?= $_SESSION['id']?>"><i class="bi bi-door-closed"></i> Parent account</a>
  </li>
 </ul>
 <?php else:?>

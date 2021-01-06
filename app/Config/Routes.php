@@ -44,6 +44,20 @@ $routes->get('logout', 'Home::logout',['filter'=>'auth']);
 // Dashboard routes
 //----------------------------
 
+//=============================Student========================================
+
+
+$routes->get('/student_courses', 'Dashboard::student_courses',['filter'=>'auth']);
+$routes->get('/student_profile_view/(:num)', 'Dashboard::student_profile_view/$1',['filter'=>'auth']);
+$routes->get('/student_courses', 'Dashboard::student_courses',['filter'=>'auth']);
+$routes->get('/student_schedules', 'Dashboard::student_schedules',['filter'=>'auth']);
+$routes->get('/student_grades', 'Dashboard::student_grades',['filter'=>'auth']);
+$routes->get('/student_payments', 'Dashboard::student_payments',['filter'=>'auth']);
+$routes->get('/student_view_child_accounts', 'Dashboard::student_view_child_accounts',['filter'=>'auth']);
+
+
+
+
 $routes->get('/dashboard', 'Dashboard::index',['filter'=>'auth']);
 $routes->match(['get','post'],'/course_select/(:num)', 'Dashboard::course_select/$1');
 
@@ -82,7 +96,13 @@ $routes->get('user_profile_view/(:segment)', 'Users::view_profile/$1',['filter'=
 //----------------------------
 
 
-$routes->get('/create_student_profile/(:num)', 'Students::create_student_profile/$1',['filter'=>'auth']);
+$routes->get('/child_accounts', 'Students::view_child_accounts',['filter'=>'auth']);
+$routes->get('/view_student_profile/(:num)', 'Students::view_student_profile/$1',['filter'=>'auth']);
+$routes->get('/add_child_account', 'Students::add_child_account',['filter'=>'auth']);
+
+$routes->match(['get','post'],'/create_child_account', 'Students::create_child_account',['filter'=>'auth']);
+$routes->match(['get','post'],'/create_student_profile', 'Students::create_student_profile',['filter'=>'auth']);
+
 
 $routes->get('/apply_course/(:num)', 'Students::apply_course/$1',['filter'=>'auth']);
 $routes->get('/view_users', 'Users::index',['filter'=>'auth']);
@@ -101,6 +121,9 @@ $routes->get('/students', 'Students::index',['filter'=>'auth']);
 
 // Users -> Parents  routes
 //----------------------------
+$routes->get('/log_to_child/(:num)', 'Parents::activate_child_account/$1',['filter'=>'auth']);
+$routes->get('/return_parent_account/(:num)', 'Parents::return_parent_account/$1',['filter'=>'auth']);
+
 $routes->add('/reate_student_by_parent', 'Parents::reate_student_by_parent/$1',['filter'=>'auth']);
 
 
