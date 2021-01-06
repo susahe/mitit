@@ -31,20 +31,35 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  */
 
-//--------------------------------
-// home Routes
-//--------------------------------
+//----------------------------------------------------------------------------------------
+// Home routes - Start Home Routes
+//-----------------------------------------------------------------------------------------
 
+//================================ login Routes=======================================
 $routes->match(['get','post'],'/login', 'Home::login',['filter'=>'noauth']);
+
+//================================ Home Routes========================================
 $routes->get('/', 'Home::index',['filter'=>'noauth']);
+
+// ================================activate email Routes ============================
+$routes->match(['get','post'],'/activate_user_account', 'Home::activate_user_account',['filter'=>'noauth']);
+//================================ Lougout Routes ====================================
 $routes->get('logout', 'Home::logout',['filter'=>'auth']);
 
 
-//----------------------------
-// Dashboard routes
-//----------------------------
+//----------------------------------------------------------------------------------------
+// Home routes - stop Home Routes
+//-----------------------------------------------------------------------------------------
 
-//=============================Student========================================
+
+//----------------------------------------------------------------------------------------
+// Dashboard routes - Start Dashboard Routes
+//-----------------------------------------------------------------------------------------
+// Any one click dashboard  view
+$routes->get('/dashboard', 'Dashboard::index',['filter'=>'auth']);
+
+
+//=============================Student Dahsboard Routes========================================
 
 
 $routes->get('/student_courses', 'Dashboard::student_courses',['filter'=>'auth']);
@@ -55,10 +70,75 @@ $routes->get('/student_grades', 'Dashboard::student_grades',['filter'=>'auth']);
 $routes->get('/student_payments', 'Dashboard::student_payments',['filter'=>'auth']);
 $routes->get('/student_view_child_accounts', 'Dashboard::student_view_child_accounts',['filter'=>'auth']);
 
+// ===============================================================================================
+
+//=============================Child Dahsboard Routes========================================
+
+
+$routes->get('/child_courses', 'Dashboard::child_courses',['filter'=>'auth']);
+$routes->get('/child_profile_view/(:num)', 'Dashboard::child_profile_view/$1',['filter'=>'auth']);
+$routes->get('/child_courses', 'Dashboard::child_courses',['filter'=>'auth']);
+$routes->get('/child_schedules', 'Dashboard::child_schedules',['filter'=>'auth']);
+$routes->get('/child_grades', 'Dashboard::child_grades',['filter'=>'auth']);
+$routes->get('/child_payments', 'Dashboard::child_payments',['filter'=>'auth']);
+$routes->get('/child_view_child_accounts', 'Dashboard::child_view_child_accounts',['filter'=>'auth']);
+$routes->get('/return_parent_account/(:num)', 'Dashboard::return_parent_account/$1',['filter'=>'auth']);
+// ===============================================================================================
+
+
+//=============================Teacher Dahsboard Routes========================================
+
+
+$routes->get('/techer_courses', 'Dashboard::teacher_course_view',['filter'=>'auth']);
+$routes->get('/techer_profile_view/(:num)', 'Dashboard::teacher_profile_view/$1',['filter'=>'auth']);
+$routes->get('/techer_courses', 'Dashboard::teacher_course_view',['filter'=>'auth']);
+$routes->get('/techer_schedules', 'Dashboard::teacher_schedule_view',['filter'=>'auth']);
+$routes->get('/techer_grades', 'Dashboard::teacher_grade_view',['filter'=>'auth']);
+$routes->get('/techer_payments', 'Dashboard::cteacher_payment_view',['filter'=>'auth']);
+
+
+// ===============================================================================================
+
+//=============================Staff Dahsboard Routes========================================
+
+
+$routes->get('/staff_courses', 'Dashboard::staff_course_views',['filter'=>'auth']);
+$routes->get('/staff_profile_view/(:num)', 'Dashboard::staff_profile_view/$1',['filter'=>'auth']);
+$routes->get('/staff_courses', 'Dashboard::staff_course_views',['filter'=>'auth']);
+$routes->get('/staff_schedules', 'Dashboard::staff_schedule_views',['filter'=>'auth']);
+$routes->get('/staff_grades', 'Dashboard::staff_grade_views',['filter'=>'auth']);
+$routes->get('/staff_payments', 'Dashboard::staff_payment_views',['filter'=>'auth']);
+
+// ===============================================================================================
+
+//=============================Admin Dahsboard Routes========================================
 
 
 
-$routes->get('/dashboard', 'Dashboard::index',['filter'=>'auth']);
+$routes->get('/admin_profile', 'Dashboard::admin_profile_view',['filter'=>'auth']);
+$routes->get('/admin_users', 'Dashboard::admin_user_views',['filter'=>'auth']);
+$routes->get('/admin_studens', 'Dashboard::admin_student_views',['filter'=>'auth']);
+$routes->get('/admin_parents', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
+$routes->get('/admin_childs', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
+$routes->get('/admin_courses', 'Dashboard::admin_course_views',['filter'=>'auth']);
+$routes->get('/admin_teachers', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
+$routes->get('/admin_schedules', 'Dashboard::admin_schedule_views',['filter'=>'auth']);
+$routes->get('/admin_batches', 'Dashboard::admin_batch_views',['filter'=>'auth']);
+$routes->get('/admin_grades', 'Dashboard::admin_grade_views',['filter'=>'auth']);
+$routes->get('/admin_payments', 'Dashboard::admin_payment_views',['filter'=>'auth']);
+$routes->get('/admin_attendance', 'Dashboard::admin_attendance_views',['filter'=>'auth']);
+$routes->get('/admin_reports', 'Dashboard::admin_report_views',['filter'=>'auth']);
+$routes->get('/admin_settings', 'Dashboard::admin_setting_views',['filter'=>'auth']);
+// ===============================================================================================
+
+
+
+//----------------------------------------------------------------------------------------
+// Dashboard routes - End Dashboard Routes
+//-----------------------------------------------------------------------------------------
+
+
+
 $routes->match(['get','post'],'/course_select/(:num)', 'Dashboard::course_select/$1');
 
 //-----------------------------
@@ -86,7 +166,7 @@ $routes->get('/guest_courses', 'Dashboard::view_guest_course',['filter'=>'auth']
 $routes->match(['get','post'],'/edit_user', 'Users::edit_user',['filter'=>'auth']);
 $routes->match(['get','post'],'/create_user', 'Users::create_user',['filter'=>'noauth']);
 $routes->get('/user_profile', 'Users::user_profile',['filter'=>'auth']);
-$routes->match(['get','post'],'/activate_user_account', 'Users::activate_user_account',['filter'=>'noauth']);
+
 $routes->match(['get','post'],'/activate_user/(:num)', 'Users::activate_user/$1',['filter'=>'auth']);
 $routes->match(['get','post'],'/deactivate_user/(:num)', 'Users::deactivate_user/$1',['filter'=>'auth']);
 $routes->get('user_profile_view/(:segment)', 'Users::view_profile/$1',['filter'=>'auth']);
@@ -94,6 +174,7 @@ $routes->get('user_profile_view/(:segment)', 'Users::view_profile/$1',['filter'=
 
 // Users -> Students  routes
 //----------------------------
+
 
 
 $routes->get('/child_accounts', 'Students::view_child_accounts',['filter'=>'auth']);
@@ -122,7 +203,7 @@ $routes->get('/students', 'Students::index',['filter'=>'auth']);
 // Users -> Parents  routes
 //----------------------------
 $routes->get('/log_to_child/(:num)', 'Parents::activate_child_account/$1',['filter'=>'auth']);
-$routes->get('/return_parent_account/(:num)', 'Parents::return_parent_account/$1',['filter'=>'auth']);
+
 
 $routes->add('/reate_student_by_parent', 'Parents::reate_student_by_parent/$1',['filter'=>'auth']);
 

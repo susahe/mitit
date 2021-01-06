@@ -66,6 +66,35 @@
 
 							  </div>
 						</div>
+
+						<div class="col-12">
+							 <div class="form-group">
+
+									<input type="text" name="csobjctive" value="">
+
+								</div>
+						</div>
+						<div class="col-12">
+							 <div class="form-group">
+
+									<input type="text" name="no installation" value="">
+
+								</div>
+						</div>
+						<div class="col-12">
+							 <div class="form-group">
+
+									<input type="text" name="teacher_id_fk" value="">
+
+								</div>
+						</div>
+						<div class="col-12">
+							 <div class="form-group">
+
+									<input type="text" name="maxstudents" value="">
+
+								</div>
+						</div>
 						<?php if (isset($validation)): ?>
 						<div class="col-12">
 							<div class="alert alert-danger" role="alert">

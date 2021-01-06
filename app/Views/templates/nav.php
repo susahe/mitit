@@ -26,7 +26,7 @@
 <a class="dropdown-item" href="/user_profile"><span class="glyphicon glyphicon-user"></span></a>
       <a class="dropdown-item" href="/user_profile"><span class="glyphicon glyphicon-user"></span>User Profile</a>
 
-      <a class="dropdown-item" href="#">Settings</a>
+      <a class="dropdown-item" href="/admin_settings">Settings</a>
      <a class="dropdown-item" href="/logout">Logout</a>
     </div>
   </li>

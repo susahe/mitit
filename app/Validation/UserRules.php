@@ -19,18 +19,22 @@ class UserRules {
     $user = $model->select('user_id_pk,email')
           ->where('email',$data['email'])
           ->first();
+    if ($user){
     $user_id = $user['user_id_pk'];
     $myTime = new Time('now');
     $time = Time::parse($myTime);
     $number = sprintf('%04d',$user_id);
     $preregid = $time->getYear().$number;
 	  print_r($preregid);
-    echo var_dump($user);
+  //  echo var_dump($user);
 
           if (($data['activatekey']==$preregid)&&($data['email']==$user['email']))
             return true;
           else
             return false;
+    }else{
+        return false;
+    }
   }
 
 

@@ -40,12 +40,7 @@
 								<input type="email" class="form-control" name ="email" readonly id="email" value="<?=$user['email'];?>">
 							</div>
 						</div>
-            <div class="col-12 col-sm-3">
-              <div class="form-group">
-                <label for="email"> Phone Number </label>
-                <input type="text" class="form-control" name ="mobile"  id="email" value="<?=$user['mobile'];?>">
-              </div>
-            </div>
+          
 						<div class="col-12 col-sm-6">
 							<div class="form-group">
 								<label for="password"> Password </label>
@@ -60,7 +55,7 @@
 							</div>
 						</div>
 
-					
+
 						<?php if (isset($validation)): ?>
 						<div class="col-12">
 							<div class="alert alert-danger" role="alert">

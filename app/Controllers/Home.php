@@ -90,6 +90,74 @@ class Home extends BaseController
 
 			}
 
+				// user Account Activation	===================================================================
+				// Activate user account after creating
+				public function activate_user_account()
+				{
+									$data=[];
+									if ($this->request->getMethod()=='post')
+
+									{
+													$rules=
+																	[
+																				'email'=> 'required|valid_email|user_not_registred[email]|is_activeted[email]',
+																				'activatekey'=> 'required|min_length[5]|is_activativation_key_available[activatekey,email]',
+																				];
+
+													$errors=	['email'    => [
+																										'required' => 'Email field requierd',
+																										'valid_email' => 'Email should be valid',
+																										'user_not_registred'=>'User still not registred',
+																										'is_active' => 'User name already activated'
+																									],
+
+																	];
+
+								 if (! $this->validate($rules,$errors))
+														{
+																				$data['validation']= $this->validator;
+														}
+
+								else{
+
+																$data['user']= $this->user_model->getuser_from_email(	$this->request->getVar('email'));
+
+
+																$user_id = $data['user']['user_id_pk'];
+																$myTime = new Time('now');
+																$time = Time::parse($myTime);
+																$number = sprintf('%04d',$user_id);
+
+																$preregid = $time->getYear().$number;
+
+
+
+														if  (($this->request->getVar('activatekey')==$preregid)&& $this->request->getVar('email')==$data['user']['email']){
+																$this->curd->change_status($user_id,$tblid="user_id_pk",$status=0,$this->user_model);
+
+																//echo var_dump($data);
+																print_r($preregid);
+
+																print_r($user_id);
+
+														 $gmail =$data['user']['email'];
+														 $name = $data['user']['firstname']." ".$data['user']['lastname'];
+														 $subject = $name." "."your account successfully activated" ;
+														 $body= "Your account  successfully activated your can loing to your account and apply for courses your want";
+														 $email_message=	$this->mail->user_reg_sendmail($gmail,$subject,$body);
+														 $session= session();
+														 $session->setFlashdata('sucess', $body);
+														 return redirect()->to('/login');
+													 }
+												}
+											}
+							return  view("users/activate_user_account",$data);
+				}
+
+
+
+
+
 
 				// user logout
 				//======================================================================

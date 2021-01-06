@@ -51,7 +51,7 @@ class Users extends BaseController
 
 						public function user_profile()
 								{
-									$data['user']=$this->model->where('id',session()->get('id'))->first();
+									$data['user']=$this->user_model->where('user_id_pk',session()->get('id'))->first();
 									return view("users/user_profile",$data);
 
 								}
