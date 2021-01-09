@@ -46,7 +46,6 @@
 
 
 
-
   <td> <?= $course['cstheryhrs']?>  </td>
   <td> <?= $course['cspracthrs']?>  </td>
 
