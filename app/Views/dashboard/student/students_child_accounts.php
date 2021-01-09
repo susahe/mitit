@@ -1,10 +1,10 @@
 <?= $this->extend('home/dashboard') ?>
 <?= $this->Section('content') ?>
-
+<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
 <div class="row">
 <div class="col-12 col-sm-12">
 <div class="shadow-sm p-3 mb-5 bg-white rounded">
-<h3 > <?= $_SESSION['firstname']." ".$_SESSION['lastname']?>'s Dash Board  </h3>
+<h3 > <?= $_SESSION['firstname']." ".$_SESSION['lastname']?>'s Child Accounts  </h3>
 
 </div>
 
@@ -14,13 +14,6 @@
 
 
 
-
-<div class="col-12 col-sm-12">
-<div class="shadow-sm p-3 mb5 bg-white rounded  col-lg-12">
-<h6>Your child account to your account</h6>
-
-</div>
-</div>
 
 
 
@@ -31,7 +24,7 @@
     <a href="/add_child_account" class="btn btn-secondary float-right" type="submit"> Add Child </a>
 
   </div>
-  <table class="table" >
+  <table class="table table-bordered table-striped">
 
      <thead class="thead-light">
 
@@ -61,7 +54,7 @@
     <td> <?= $user['mobile'] ?> </td>
     <td> <?= $user['nic'] ?> </td>
     <td colspan="2">   <a href="/log_to_child/<?= $user['user_id']?>" class="btn btn-secondary float-right" type="submit"> View </a> </td>
-    <td> <a href="#" class="btn btn-secondary float-right" type="submit"> Activate </a></td>
+  
 
     <?php }?>
 

@@ -43,8 +43,7 @@ class Students extends BaseController
 					$this->csmodel = new CourseModel();
 					$this->curd = new Curd();
 					$this->mail 	= new Send_Mail();
-					$this->days = new DaysModel();
-					$this->enroll = new EnrolModel();
+
 				}
 
 				// login
@@ -294,7 +293,7 @@ public function create_child_account()
 			$session->setFlashdata('sucess', $message);
 			$session->set('loginUser','Student');
 
-		return redirect()->to('/dashboard');
+		return redirect()->to('/student_view_child_accounts');
 		 }
 	 }
 

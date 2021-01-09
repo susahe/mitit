@@ -180,67 +180,74 @@ class Users extends BaseController
 
 				public function activate_user($id)
 						{
-								$message = "The user sucessfully activated";
-								//$data=$this->user_model->getUserStatusById($id);
-								$this->curd->change_status($id,$status=0,$message,$this->user_model);
-								return redirect()->to('/view_users');
+
+								session()->setFlashdata('sucess', 'Sucessfully activated');
+								$this->user_model->change_status($id,$status=0,);
+								return redirect()->to('/admin_users');
 
 							}
 
 				public function deactivate_user($id)
 						{
-							$message = "The user sucessfully deactivated";
-							//$data=$this->user_model->getUserStatusById($id);
-							$this->curd->change_status($id,$status=1,$message,$this->user_model);
-							return redirect()->to('/view_users');
+								session()->setFlashdata('sucess', 'Sucessfully deactivated');
+							$this->user_model->change_status($id,$status=1);
+							return redirect()->to('/admin_users');
 						}
 
 				 public function  system_created_users()
 						{
-								$data=[];
-								if ($this->request->getMethod()=='post')
-									{
-											$rules=[
-																'firstname'=> 'required|min_length[3]|max_length[20]',
-																'lastname'=> 'required|min_length[3]|max_length[20]',
-																'email'=> 'required|min_length[5]|max_length[50]|valid_email|is_unique[users.email]',
-																'password'=> 'required|min_length[8]|max_length[255]',
-
-																'cpassword'=> 'matches[password]',
-														 ];
-								if (! $this->validate($rules))
-										{
-												$data['validation']= $this->validator;
-										}
-								else
-										{
-											$newdata =
+							$data=[];
+							if ($this->request->getMethod()=='post')
+							{
+											$rules=
 															[
-																'email' => $this->request->getVar('email'),
-																'password' => $this->request->getVar('password'),
-																'role' => $this->request->getVar('role'),
-																'firstname' => $this->request->getVar('firstname'),
-																'lastname' => $this->request->getVar('lastname'),
+																		'firstname'=> 'required|min_length[3]|max_length[20]',
+																		'lastname'=> 'required|min_length[3]|max_length[100]',
+																		'email'=> 'required|min_length[5]|max_length[50]|valid_email|is_unique[tbl_users.email]',
+																		'password'=> 'required|min_length[8]|max_length[255]',
 
-																'slug' => url_title($this->request->getVar('email')),
-															];
-											$this->user_model->save($newdata);
-											$user_id = $this->user_model->getInsertID();
+																		'cpassword'=>
+																			[
+																				'label' => "Confirm Password",
+																				'rules'=> 'matches[password]',
+																				'errors'=> [
+																												'matches'=>" Confirm password should be match with password"
+																									 ]
+																			]
 
+															 ];
+											if (! $this->validate($rules))
+											{
+																		$data['validation']= $this->validator;
+											}
+												else
+											{
+												$newdata =
+																[
+																	'email' => $this->request->getVar('email'),
+																	'password' => $this->request->getVar('password'),
+																	'user_role' => "Student",
+																	'firstname' => $this->request->getVar('firstname'),
+																	'lastname' => $this->request->getVar('lastname'),
+																	'slug' => url_title($this->request->getVar('email')),
+																];
 
-											$myTime = new Time('now');
-											$time = Time::parse($myTime);
-											$number = sprintf('%04d',$user_id);
-											$preregid = $time->getYear().$number;
-											$gmail =$newdata['email'];
-											$subject = "Application has submited successfully with pre-registraion id"."  ".$preregid." "."to your"." ".$gmail." "."emaill address";
-											$body= "Your Application successfully submited and your Pre Registred id  is"." ".$preregid." ". "Plase keep this with you for futrue refrence and first log to your account to active. after using this code then your account will be activated.  Your Application Staus is Inactive <a href='http://localhost:8080/activate_user_account/'>click here to activate<a>,";
-											$email_message=	$this->mail->user_reg_sendmail($gmail,$subject,$body);
-											$message =$subject;
-											$session= session();
-											$session->setFlashdata('sucess', $message);
-											return redirect()->to('/view_users');
-									}
+												$this->user_model->save($newdata);
+												$user_id = $this->user_model->getInsertID();
+												$myTime = new Time('now');
+												$time = Time::parse($myTime);
+												$number = sprintf('%04d',$user_id);
+												$preregid = $time->getYear().$number;
+												$gmail =$newdata['email'];
+												$subject = "Application has submited successfully with pre-registraion id"."  ".$preregid." "."to your"." ".$gmail." "."emaill address";
+												$body= "Your Application successfully submited and your Pre Registred id  is"." ".$preregid." ". "Plase keep this with you for futrue refrence and first log to your account to active. after using this code then your account will be activated.  Your Application Staus is Inactive <a href='http://localhost:8080/activate_user_account/'>click here to activate<a>,";
+												$email_message=	$this->mail->user_reg_sendmail($gmail,$subject,$body);
+												$message =$subject;
+												$session= session();
+												$session->setFlashdata('sucess', $message);
+												return redirect()->to('/admin_users');
+										 }
+
 								}
 								return  view("users/system_created_users",$data);
 				}

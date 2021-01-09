@@ -45,6 +45,14 @@ class ParentModel extends Model {
     return $student;
  }}
 
-
+public function get_all_parent_accounts()
+{
+      $this->select('*');
+        $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
+        $this->select('tbl_users.firstname,tbl_users.lastname');
+        $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.user_id');
+        $student = $this->get()->getResultArray();
+        return $student;
+}
 
 }

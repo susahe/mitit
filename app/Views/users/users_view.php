@@ -5,6 +5,7 @@
 <div class="pb-5">
 <a class="btn btn-secondary float-right" href="/create_user_system"> Create users </a>
 </div>
+<div class ="#">
 <table class="table table-hover" >
 
    <thead class="thead-dark">
@@ -60,10 +61,10 @@
     <a class="  " href="/deactivate_user/<?=$user['id'];?>"><img class="userstatus" src="<?php echo base_url('img/active_user.png');?>" ></a>
 
 
-    <form>
-      </td>
+
   <?php }?>
 
+    </td>
 </tr>
 
 
@@ -81,8 +82,8 @@
 
      <?php endif ?>
 
-
-
+  <form>
+</div> 
 
 
 

@@ -4,8 +4,8 @@
 <div>
 <h3> View All Available profesional courses </h3>
 </div>
-
-<?php if ($courses) :?>
+<a class="btn btn-secondary float-right" href="/create_teacher"> Create Teacher </a>
+<?php if ($parents) :?>
 <table class="table" >
 
    <thead class="thead-light">
@@ -29,7 +29,7 @@
 </thead>
 <tbody>
 
-<?php foreach($courses as $course){ ?>
+<?php foreach($parents as $parent){ ?>
 
 <tr>
   <td><a class=" btn btn-primary " href="/course_view/<?=esc($course['csslug'],'url');?>">  <?= $course['id']?></a></td>
@@ -44,13 +44,13 @@
 
 
 
-  <td> <?= $course['cstheryhrs']?>  </td>
-  <td> <?= $course['cspracthrs']?>  </td>
+  <td> <?= $parent['cstheryhrs']?>  </td>
+  <td> <?= $parent['cspracthrs']?>  </td>
 
-  <td> <?= $course['csfees']?>  </td>
-  <td> <?= $course['cstype']?>  </td>
-  <td> <?= $course['csimage']?>  </td>
-  <td> <?= $course['csduemonths']?>  </td>
+  <td> <?= $parent['csfees']?>  </td>
+  <td> <?= $parent['cstype']?>  </td>
+  <td> <?= $parent['csimage']?>  </td>
+  <td> <?= $parent['csduemonths']?>  </td>
 
 <td> <a href="#">Apply for Course</a>
 

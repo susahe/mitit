@@ -117,7 +117,7 @@ $routes->get('/staff_payments', 'Dashboard::staff_payment_views',['filter'=>'aut
 
 $routes->get('/admin_profile', 'Dashboard::admin_profile_view',['filter'=>'auth']);
 $routes->get('/admin_users', 'Dashboard::admin_user_views',['filter'=>'auth']);
-$routes->get('/admin_studens', 'Dashboard::admin_student_views',['filter'=>'auth']);
+$routes->get('/admin_students', 'Dashboard::admin_student_views',['filter'=>'auth']);
 $routes->get('/admin_parents', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
 $routes->get('/admin_childs', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
 $routes->get('/admin_courses', 'Dashboard::admin_course_views',['filter'=>'auth']);
@@ -163,6 +163,7 @@ $routes->get('/guest_courses', 'Dashboard::view_guest_course',['filter'=>'auth']
 // Users routes
 //----------------------------
 
+$routes->match(['get','post'],'/system_created_users', 'Users::system_created_users',['filter'=>'auth']);
 $routes->match(['get','post'],'/edit_user', 'Users::edit_user',['filter'=>'auth']);
 $routes->match(['get','post'],'/create_user', 'Users::create_user',['filter'=>'noauth']);
 $routes->get('/user_profile', 'Users::user_profile',['filter'=>'auth']);
@@ -175,6 +176,8 @@ $routes->get('user_profile_view/(:segment)', 'Users::view_profile/$1',['filter'=
 // Users -> Students  routes
 //----------------------------
 
+$routes->get('apply_for_course/(:segment)', 'Courses::apply_course/$1',['filter'=>'auth']);
+$routes->match(['get','post'],'apply_for_batch/(:num)', 'Batches::apply_for_batch/$1',['filter'=>'auth']);
 
 
 $routes->get('/child_accounts', 'Students::view_child_accounts',['filter'=>'auth']);
@@ -220,9 +223,10 @@ $routes->get('/parents', 'Staffs::index',['filter'=>'auth']);
 
 // Users -> Teachers  routes
 //----------------------------
+$routes->match(['get','post'],'//create_teacher', 'Teachers::create_teacher',['filter'=>'auth']);
 
 $routes->get('/teachers', 'Teachers::index',['filter'=>'auth']);
-$routes->get('/create_teacher', 'Teachers::create_teacher',['filter'=>'auth']);
+
 $routes->match(['get','post'],'/set_days_teachers/(:alpha)', 'Teachers::set_days_teachers/$1',['filter'=>'auth']);
 
 
@@ -267,9 +271,13 @@ $routes->match(['get','post'],'/deactivate_course_module_task/(:num)', 'CourseMo
 
 
 
+//----------------------------------
+// create batch
+//---------------------------------
 
 
 
+$routes->match(['get','post'],'/create_batch', 'Batches::create_batch',['filter'=>'auth']);
 
 
 

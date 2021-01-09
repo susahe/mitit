@@ -15,12 +15,6 @@
 
 
 
-<div class="col-12 col-sm-12">
-<div class="shadow-sm p-3 mb5 bg-white rounded  col-lg-12">
-<h6>Your child account to your account</h6>
-
-</div>
-</div>
 
 
 

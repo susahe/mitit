@@ -1,15 +1,19 @@
 <?php namespace App\Controllers;
 use App\Models\User\UserModel;
 use App\Models\User\ParentModel;
+use App\Models\User\TeacherModel;
 use App\Models\Course\CourseModel;
+use App\Models\Batch\BatchModel;
 use App\Models\User\StudentModel;
 use CodeIgniter\I18n\Time;
 class Dashboard extends BaseController
 {
 	private $model;
 	private $csmodel;
-	private $new_stdmodel;
+	private $student_model;
 	private $parent_model;
+	private $teacher_model;
+	private $batch_model;
 	public function __construct()
 
 	{
@@ -18,8 +22,10 @@ class Dashboard extends BaseController
 
 		$this->user_model = new UserModel();
 		$this->cs_model = new CourseModel();
-		$this->new_stdmodel = new StudentModel();
+		$this->student_model = new StudentModel();
 		$this->parent_model =new ParentModel();
+		$this->teacher_model = new TeacherModel();
+		$this->batch_model = new BatchModel();
 	}
 
 	public function index()
@@ -64,6 +70,7 @@ class Dashboard extends BaseController
 		elseif ($loginUser=="Admin"){
 			$data=[];
 
+
 			return  view("dashboard/admin/admin_dashboard",$data);
 
 		}
@@ -87,25 +94,27 @@ class Dashboard extends BaseController
 	public function admin_user_views()
 	{
 		$data=[];
-		$data['courses'] = $this->cs_model->getCourses();
+
+		$data['users']=$this->user_model->get_all_users();
 		return  view("dashboard/admin/admin_user_views",$data);
 	}
 	public function admin_student_views()
 	{
 		$data=[];
-		$data['courses'] = $this->cs_model->getCourses();
-		return  view("dashboard/admin/admin_user_views",$data);
+		$data['students'] = $this->student_model->get_all_student_with_username();
+		return  view("dashboard/admin/admin_student_views",$data);
 	}
 	public function admin_teacher_views()
 	{
 		$data=[];
 		$data['courses'] = $this->cs_model->getCourses();
+			$data['teachers']= $this->teacher_model->select_users_name_for_teachers();
 		return  view("dashboard/admin/admin_teacher_views",$data);
 	}
 	public function admin_parent_views()
 	{
 		$data=[];
-		$data['courses'] = $this->cs_model->getCourses();
+		$data['parents'] = $this->parent_model->get_all_parent_accounts();
 		return  view("dashboard/admin/admin_parent_views",$data);
 	}
 		public function admin_course_views()
@@ -118,7 +127,7 @@ class Dashboard extends BaseController
 		public function admin_batch_views()
 		{
 			$data=[];
-			$data['courses'] = $this->cs_model->getCourses();
+			$data['batches'] = $this->batch_model->get_all_batches();
 			return  view("dashboard/admin/admin_batch_views",$data);
 		}
 		public function admin_schedule_views()
@@ -263,6 +272,7 @@ class Dashboard extends BaseController
 		$year = $time->getYear()-6;
 		$data['bdate']= $year.'-12-31';
 		$data['courses'] = $this->cs_model->getCourses();
+		$data['users'] = $this->user_model->getuser_from_id($id);
 		return  view("dashboard/student/student_profile_view",$data);
 	}
 
@@ -270,7 +280,7 @@ class Dashboard extends BaseController
 	{
 		$data=[];
 		$data['courses'] = $this->cs_model->getCourses();
-		return  view("dashboard/student/student_courses",$data);
+		return  view("dashboard/student/student_course_views",$data);
 	}
 
 	public function student_schedules()

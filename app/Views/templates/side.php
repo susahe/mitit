@@ -18,8 +18,8 @@
  <li class="nav-item <?=($uri->getSegment(1)=='admin_users' ? 'active' : null )?>">
    <a class="nav-link" href="/admin_users"> <i class="bi bi-person-fill"></i> Users</a>
  </li>
- <li class="nav-item <?=($uri->getSegment(1)=='admin_studens' ? 'active' : null )?>">
-   <a class="nav-link" href="/admin_studens"> <i class="bi bi-person-fill"></i> Students</a>
+ <li class="nav-item <?=($uri->getSegment(1)=='admin_students' ? 'active' : null )?>">
+   <a class="nav-link" href="/admin_students"> <i class="bi bi-person-fill"></i> Students</a>
  </li>
   <li class="nav-item <?=($uri->getSegment(1)=='admin_parents' ? 'active' : null )?>">
    <a class="nav-link" href="/admin_parents"><i class="bi bi-file-person-fill"></i> Parents</a>

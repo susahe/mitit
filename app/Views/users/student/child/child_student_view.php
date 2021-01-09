@@ -1,11 +1,11 @@
 
-
+<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
 <div class="pb-5">
 <a class="btn btn-secondary float-right" href="/create_user_system"> Create Student </a>
 </div>
 <table class="table" >
 
-   <thead class="thead-light">
+    <table class="table table-bordered table-striped">
 
   <tr>
       <th> ID# </th>
@@ -24,7 +24,7 @@
 <?php foreach($childs as $user){ ?>
 <tr>
 
-  
+
 
 
   ]

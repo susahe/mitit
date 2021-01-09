@@ -1,65 +1,70 @@
 <?= $this->extend('home/dashboard') ?>
 <?= $this->Section('content') ?>
-
-<div>
-<h3> View All Available profesional courses </h3>
+<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
+<h3> View All Available Users  </h3>
+<div class="">
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<small> you can filter users by typing any word in the table </small>
 </div>
 
-<?php if ($courses) :?>
-<table class="table" >
+<a class="btn btn-secondary float-right" href="/system_created_users" data-toggle="tooltip" data-placement="top" title="Create User Click here"> Create User </a>
 
-   <thead class="thead-light">
+<div>
 
-
-
-  <tr>
+</div>
+<?php if ($users) :?>
+ <table class="table table-bordered table-striped">
+<thead class="thead-light">
+<tr>
       <th> ID# </th>
-      <th> Course Name </th>
-      <th>  Theory Hours</th>
+      <th> First Name </th>
+      <th>  Last Name</th>
+      <th> E-mail </th>
 
-      <th> Practical Hrs </th>
-      <th> Project Hrs </th>
-      <th> Course Fees </th>
-      <th> Course Type </th>
-      <th> Course Image </th>
+      <th> User Role </th>
+      <th> User Name </th>
+        <th> Status </th>
       <th> Action </th>
 
-
-  </tr>
+</tr>
 </thead>
-<tbody>
-
-<?php foreach($courses as $course){ ?>
-
+<tbody id="myTable">
+<?php foreach($users as $user){ ?>
 <tr>
-  <td><a class=" btn btn-primary " href="/course_view/<?=esc($course['csslug'],'url');?>">  <?= $course['id']?></a></td>
-  <td> <a class=" " href="/course_view/<?=esc($course['csslug'],'url');?>"> <?= $course['csname']?></a> </td>
+  <td> <?= $user['user_id_pk']?>  </td>
+  <td> <?=$user['firstname']?>  </td>
+  <td> <?=$user['lastname']?>  </td>
+  <td> <?=$user['email']?>  </td>
+
+  <td> <?=$user['user_role']?>  </td>
+  <td> <?=$user['user_name']?>  </td>
+
+  <?php  if ($user['status']==0){
+
+     ?>
+
+    <td>
+      <a class="  " type="submit" href="/activate_user/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/inactive_user.png');?>"></a>
+
+
+    </td>
+
+  <?php  }
+    else
+    { ?>
+      <td>
+      <a class="  " href="/deactivate_user/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/active_user.png');?>" ></a>
 
 
 
-
-
-
-
-
-
-
-  <td> <?= $course['cstheryhrs']?>  </td>
-  <td> <?= $course['cspracthrs']?>  </td>
-
-  <td> <?= $course['csfees']?>  </td>
-  <td> <?= $course['cstype']?>  </td>
-  <td> <?= $course['csimage']?>  </td>
-  <td> <?= $course['csduemonths']?>  </td>
-
-<td> <a href="#">Apply for Course</a>
-
+    <?php }?>
+<td> <a href="/admin_edit_users/<?=esc($user['slug'],'url');?>" data-toggle="tooltip" data-placement="top" title="view more about users"><i class="bi bi-chevron-compact-right"></i></a> </td>
 </tr>
 <?php } ?>
-
-  </tbody>
+</tbody>
 </table>
 <?php else:?>
 <p> There are no courses Available for apply  </p>
 <?php endif;?>
+</div>
 <?= $this->endSection() ?>

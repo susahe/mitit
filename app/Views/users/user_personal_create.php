@@ -1,11 +1,11 @@
 <?= $this->extend('home/dashboard') ?>
 <?= $this->Section('content') ?>
-<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
+
 
 <div class="row">
 	<div class="">
 		<div class="container">
-     <h3> <?= $_SESSION['firstname']." ".$_SESSION['lastname']?>'s Add Child </h3>
+     <h3> <?= $_SESSION['firstname']." ".$_SESSION['lastname']?>'s </h3>
 
 
 
@@ -18,22 +18,10 @@
 				<hr>
 
 
-								<form class="" action="/create_child_account" method="post">
+								<form class="" action="/create_student_profile" method="post">
 									<div class="row">
-										<div class="col-12 col-sm-6">
-											<div class="form-group">
-													<input type="text" class="form-control" name ="firstname" id="firstname" value="<?= set_value('firstname');?>" placeholder="First Name">
-													<small> Enter your first name here </small>
-											</div>
-										</div>
 
-										<div class="col-12 col-sm-6">
-											<div class="form-group">
 
-												<input type="text" class="form-control" name ="lastname" id="lastname" value="<?= set_value('lastname');?>" placeholder="Last Name">
-												<small> Enter your last name here </small>
-											</div>
-										</div>
 
 										<div class="col-12 col-sm-4">
 											<div class="form-group">

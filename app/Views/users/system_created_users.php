@@ -2,8 +2,10 @@
 <?= $this->Section('content') ?>
 
 <div class="row">
-	<div class="col-12 cols-sm8 offset-sm2 col-md-6 offset-md-3 mt-5 pt-3 pb-3 bg-white form-wrapper">
+
 		<div class="container">
+		
+			<div class="col-12 col-md-12 col- pb-3 bg-white form-wrapper">
 			<h3> Create your account  </h3>
 				<form class="" action="/create_user_system" method="post">
 					<div class="row">
@@ -22,20 +24,13 @@
 							</div>
 						</div>
 
-						<div class="col-6">
+						<div class="col-12 col-sm-12">
 							<div class="form-group">
 
 								<input type="text" class="form-control" name ="email" id="email" value="<?= set_value('email');?>" placeholder="Enter your Email">
 							</div>
 						</div>
 
-						<div class="col-12 col-sm-6">
-							<div class="form-group">
-
-								<input type="text" class="form-control" name ="mobile" id="mobile" value="<?= set_value('mobile');?>" placeholder="Enter your Mobile phone ">
-
-							</div>
-						</div>
 
 						<div class="col-12 col-sm-6">
 							<div class="form-group">
@@ -72,13 +67,12 @@
 						<?php endif; ?>
 					</div>
 					<div class ="row">
-						<button type="submit" class="col-3 btn btn-primary">Register </button>
+						<button type="submit" class="col-3 btn btn-primary ">Register </button>
 					</div>
 				</form>
-</div>
- <a href#> Help </a> <a href="#>privacy Terms
-</div>
 
 </div>
 
+</div>
+</div>
 <?= $this->endSection() ?>

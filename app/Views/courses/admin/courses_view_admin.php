@@ -2,7 +2,7 @@
 <?= $this->Section('content') ?>
 
 <div class="pb-5">
-<a class="btn btn-secondary float-right" href="/create_course"> Create Course </a>
+<a class="btn btn-secondary float-right" href="/system_created_users"> Create Course </a>
 </div>
 <table class="table" >
 

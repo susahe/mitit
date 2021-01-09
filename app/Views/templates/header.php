@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="<?php echo base_url('css/font-awesome.min.css');?>" />
 
 <link rel="stylesheet" href="<?php echo base_url('css/bootstrap-icons.css');?>" />
+<script src="<?php echo base_url('js/jquery.min.js');?>"> </script>
 
 <link rel="stylesheet" href="<?php echo base_url('css/main.css');?>" />
 <link rel="stylesheet" href="<?php echo base_url('css/style.css');?>" />

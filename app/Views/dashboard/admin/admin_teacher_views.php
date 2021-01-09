@@ -1,12 +1,13 @@
 <?= $this->extend('home/dashboard') ?>
 <?= $this->Section('content') ?>
 
-<div>
-<h3> View All Available profesional courses </h3>
-</div>
+<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
+<h3> View All Available Teachers </h3>
 
-<?php if ($courses) :?>
-<table class="table" >
+<a class="btn btn-secondary float-right" href="/create_teacher"> Create Teacher </a>
+
+<?php if ($teachers) :?>
+ <table class="table table-bordered table-striped table-hover">
 
    <thead class="thead-light">
 
@@ -29,11 +30,9 @@
 </thead>
 <tbody>
 
-<?php foreach($courses as $course){ ?>
+<?php foreach($teachers as $teacher){ ?>
 
 <tr>
-  <td><a class=" btn btn-primary " href="/course_view/<?=esc($course['csslug'],'url');?>">  <?= $course['id']?></a></td>
-  <td> <a class=" " href="/course_view/<?=esc($course['csslug'],'url');?>"> <?= $course['csname']?></a> </td>
 
 
 
@@ -41,16 +40,13 @@
 
 
 
+  <td> <?= $teacher['firstname']?>  </td>
+  <td> <?= $teacher['lastname']?>  </td>
 
-
-
-  <td> <?= $course['cstheryhrs']?>  </td>
-  <td> <?= $course['cspracthrs']?>  </td>
-
-  <td> <?= $course['csfees']?>  </td>
-  <td> <?= $course['cstype']?>  </td>
-  <td> <?= $course['csimage']?>  </td>
-  <td> <?= $course['csduemonths']?>  </td>
+  <td> <?= $teacher['nic']?>  </td>
+  <td> <?= $teacher['mobile']?>  </td>
+  <td> <?= $teacher['hometel']?>  </td>
+  <td> <?= $teacher['teacher_status']?>  </td>
 
 <td> <a href="#">Apply for Course</a>
 
@@ -59,7 +55,9 @@
 
   </tbody>
 </table>
+
 <?php else:?>
 <p> There are no courses Available for apply  </p>
 <?php endif;?>
+</div>
 <?= $this->endSection() ?>

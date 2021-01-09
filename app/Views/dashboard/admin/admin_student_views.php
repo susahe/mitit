@@ -1,12 +1,16 @@
 <?= $this->extend('home/dashboard') ?>
 <?= $this->Section('content') ?>
 
-<div>
+<div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
 <h3> View All Available profesional courses </h3>
-</div>
 
-<?php if ($courses) :?>
-<table class="table" >
+<div class="">
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<small> you can filter users by typing key words </small>
+</div>
+<a class="btn btn-secondary float-right" href="/create_teacher"> Create Student </a>
+<?php if ($students) :?>
+ <table class="table table-bordered table-striped">
 
    <thead class="thead-light">
 
@@ -14,26 +18,24 @@
 
   <tr>
       <th> ID# </th>
-      <th> Course Name </th>
-      <th>  Theory Hours</th>
+      <th> Student Name </th>
+      <th>  Last Name</th>
 
-      <th> Practical Hrs </th>
-      <th> Project Hrs </th>
-      <th> Course Fees </th>
-      <th> Course Type </th>
-      <th> Course Image </th>
+      <th> Gender </th>
+      <th> Birth Date </th>
+      <th> Mobile  </th>
+      <th> Home Telephone </th>
+
       <th> Action </th>
 
 
   </tr>
 </thead>
-<tbody>
+<tbody id="myTable">
 
-<?php foreach($courses as $course){ ?>
+<?php foreach($students as $student){ ?>
 
 <tr>
-  <td><a class=" btn btn-primary " href="/course_view/<?=esc($course['csslug'],'url');?>">  <?= $course['id']?></a></td>
-  <td> <a class=" " href="/course_view/<?=esc($course['csslug'],'url');?>"> <?= $course['csname']?></a> </td>
 
 
 
@@ -42,15 +44,13 @@
 
 
 
-
-
-  <td> <?= $course['cstheryhrs']?>  </td>
-  <td> <?= $course['cspracthrs']?>  </td>
-
-  <td> <?= $course['csfees']?>  </td>
-  <td> <?= $course['cstype']?>  </td>
-  <td> <?= $course['csimage']?>  </td>
-  <td> <?= $course['csduemonths']?>  </td>
+  <td> <?= $student['student_id_pk']?> </td>
+  <td> <?= $student['firstname']?>  </td>
+  <td> <?= $student['lastname']?>  </td>
+  <td> <?= $student['gender']?>  </td>
+  <td> <?= $student['birthdate']?>  </td>
+  <td> <?= $student['mobile']?>  </td>
+  <td> <?= $student['hometel']?>  </td>
 
 <td> <a href="#">Apply for Course</a>
 
@@ -62,4 +62,5 @@
 <?php else:?>
 <p> There are no courses Available for apply  </p>
 <?php endif;?>
+</div>
 <?= $this->endSection() ?>

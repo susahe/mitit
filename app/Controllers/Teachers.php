@@ -17,7 +17,8 @@ class Teachers extends BaseController
 
 				private $model;
 				private $mail;
-				private $teachermodel;
+				private $teacher_model;
+				private $user_model;
 				private $curd;
 				private $csmodel;
 				private $days;
@@ -33,8 +34,8 @@ class Teachers extends BaseController
 
 
 					// Using Model create Objects
-					$this->model 				= new UserModel();
-					$this->teachermodel = new TeacherModel();
+					$this->user_model = new UserModel();
+					$this->teacher_model = new TeacherModel();
 					$this->csmodel = new CourseModel();
 					$this->curd = new Curd();
 					$this->mail 	= new Send_Mail();
@@ -78,7 +79,7 @@ class Teachers extends BaseController
 				// 			 $data['title'] = $data['user']['firstname'];
 
 
-					 $data['teacher'] = $this->teachermodel->findAll();
+					 $data['teacher'] = $this->teacher_model->findAll();
 					 return  view("users/teacher/teacher_view",$data);
 
 				}
@@ -156,57 +157,91 @@ class Teachers extends BaseController
 
 
 									$data=[];
-										$rest = session()->get('cs');
-									$data['courses']= $this->csmodel->getselectedCourse($rest);
-									if ($this->request->getMethod()=='post')
+
+								if ($this->request->getMethod()=='post')
+								{
+
+									$rules=
+													[
+																'firstname'=> 'required|min_length[3]|max_length[20]',
+																'lastname'=> 'required|min_length[3]|max_length[100]',
+																'email'=> 'required|min_length[5]|max_length[50]|valid_email|is_unique[tbl_users.email]',
+																'password'=> 'required|min_length[8]|max_length[255]',
+
+																'cpassword'=>
+																	[
+																		'label' => "Confirm Password",
+																		'rules'=> 'matches[password]',
+																		'errors'=> [
+																										'matches'=>" Confirm password should be match with password"
+																							 ]
+																	],
+
+
+																	'address'=> 'required|min_length[3]|max_length[255]',
+																	'gender'=> 'required',
+																	'nic'=> 'required',
+																	'birthdate'=>'required',
+																	'mobile'=> 'required|min_length[10]|max_length[10]|valid_phone_number[mobile]',
+																	'hometel'=> 'min_length[10]|max_length[10]|valid_phone_number[hometel]',
+
+																	'qulification' => 'required'
+													 ];
+
+																	if (! $this->validate($rules)){
+
+									$data['validation']= $this->validator;
+								}
+								 else
 									{
-									$rules=[
-										'address'=> 'required|min_length[3]|max_length[255]',
-										//'days'=> 'required|min_length[3]|max_length[20]',
-									//	'time'=> 'required'
-								];
+										// $user_id = session()->get('id');
+										// $myTime = new Time('now');
+										// $time = Time::parse($myTime);
+										// $number = sprintf('%04d',$user_id);
+										// $teacherno = $time->getYear().$number;
 
-										if (! $this->validate($rules)){
+										//	$user_model = new Useruser_model();
 
-								 		$data['validation']= $this->validator;
-								 	}
-								 	 else
-								 		{
+										$userdata =
+														[
+															'email' => $this->request->getVar('email'),
+															'password' => $this->request->getVar('password'),
+															'user_role' => "Teacher",
+															'firstname' => $this->request->getVar('firstname'),
+															'lastname' => $this->request->getVar('lastname'),
+															'slug' => url_title($this->request->getVar('email')),
+														];
 
-
-								 			//	$model = new UserModel();
-								 		$newdata = [
-											'id' => session()->get('id'),
-								 			'address' => $this->request->getVar('address'),
-								 		//	'days' => $this->request->getVar('days'),
-								 		//	'time' => $this->request->getVar('time'),
-								 			//'slug' => url_title($this->request->getVar('time')),
-								 		];
-										$coursedata=[
-											'id'=>session()->get('id'),
-											'course'=>2,
-										];
-
-										$studentno = '20'.session()->get('id');
-										$userdata=[
-												'id' => session()->get('id'),
-												'username' => $studentno,
-										];
-										echo var_dump($coursedata);
-								//	$this->studentmodel->insert($newdata);
-								//	$this->model->save($userdata);
-									$this->enroll->insert($coursedata);
+										$this->user_model->save($userdata);
+										$user_id = $this->user_model->getInsertID();
+										
 
 
-								 		$message = "You are Sucessfuly Apply for the Course your Student Number is ".$studentno;
+									$newdata = [
+										'user_id_fk' => $user_id,
+										'address' => $this->request->getVar('address'),
+										'gender' => $this->request->getVar('gender'),
+										'nic' => $this->request->getVar('nic'),
+										'birthdate' => $this->request->getVar('birthdate'),
+										'hometel' => $this->request->getVar('hometel'),
+										'mobile' => $this->request->getVar('mobile'),
 
-										$user_id = $this->model->getInsertID();
+									];
+
+
+											$this->teacher_model->save($newdata);
+
+
+
+								 		$message = "You are Sucessfuly Apply for the Course your Student Number is ";
+
+									//	$user_id = $this->model->getInsertID();
 										$email = session()->get('email');
 										$myTime = new Time('now');
 
 
-										$email_message=	$this->mail->user_reg_sendmail(	$email,	$studentno);
-										$message = "You areSucessfuly registred your Pre Registration Id is"." ".	$studentno." ".$email_message;
+								//		$email_message=	$this->mail->user_reg_sendmail(	$email,	$teacherno);
+										$message = "You areSucessfuly registred your Pre Registration Id is";
 										$session= session();
 										$session->setFlashdata('sucess', $message);
 
@@ -215,13 +250,17 @@ class Teachers extends BaseController
 
 
 //echo var_dump($newdata);
-									return redirect()->to('/dashboard');
+									return redirect()->to('/admin_teachers');
 								 	 }
 								 }
-								 #$
-								 $data['days'] = $this->days->get_days_id(session()->get('id'));
+
+								 $myTime = new Time('now');
+								 $time = Time::parse($myTime);
+								 $year = $time->getYear()-6;
+								 $data['bdate']= $year.'-12-31';
 								 	return  view("/users/teacher/create_teacher",$data);
 								 	}
+
 
 
 									public function retirive_course_select($rest){

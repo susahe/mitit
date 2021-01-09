@@ -1,12 +1,15 @@
 <?php namespace App\Controllers;
 use App\Models\Course\CourseModel;
+use App\Models\User\TeacherModel;
+use App\Models\Batch\BatchModel;
 use App\Libraries\Curd;
 use App\Libraries\Send_Mail;
 use CodeIgniter\I18n\Time;
 class Courses extends BaseController
 {
 	private $course_model;
-
+	private $teacher_model;
+	private $batches_model;
 	private $mail;
 
 	public function __construct()
@@ -15,6 +18,8 @@ class Courses extends BaseController
 		helper('form');
 		helper('date');
 		 $this->course_model = new CourseModel();
+		 $this->teacher_model = new TeacherModel();
+		 $this->batches_model= new BatchModel();
 		  $this->curd = new Curd();
 		// $this->mail = new Send_Mail();
 
@@ -22,8 +27,9 @@ class Courses extends BaseController
 	// login
 	public function index()
 	{
-		$model = new CourseModel();
+
 	 $data['courses']= $this->course_model->findAll();
+
 		//	echo var_dump($data);
 		if(!$data['courses']){
 			$data['message'] = "There is No Course to view";
@@ -32,7 +38,7 @@ class Courses extends BaseController
 	   return view("courses/admin/courses_view_admin",$data);
 
 		 	//return view("courses/course_view",$data);
-		
+
 	}
 
 	public function view_course($cslug=null){
@@ -56,16 +62,18 @@ class Courses extends BaseController
 		{
 		$rules=[
 			'csname'=> 'required|min_length[3]|max_length[255]',
-			'cscode'=> 'required',
+			'cscode'=> 'required|max_length[5]',
 			'cstheryhrs'=> 'required',
 			'cspracthrs'=> 'required',
-
+			'no_installation' => 'required',
 			'csprojecthrs'=> 'required',
 			'csfees'=> 'required',
 			'cstype'=> 'required',
 			'csperyear'=> 'required',
 		//	'csimage'=> 'required',
 				'csduemonths'=> 'required',
+
+				'teacher_id_fk'=>'required',
 		];
 	 if (! $this->validate($rules)){
 
@@ -88,10 +96,11 @@ class Courses extends BaseController
 			'csperyear' => $this->request->getVar('csperyear'),
 		//	'csimage' => $this->request->getVar('csimage'),
 			'csduemonths' => $this->request->getVar('csduemonths'),
-		'csslug' => url_title($this->request->getVar('csname')),
+			'teacher_id_fk' => $this->request->getVar('teacher_id_fk'),
+		'csslug' => url_title($this->request->getVar('csname').$this->request->getVar('teacher_id_fk')),
 		];
 
-	$this->model->save($newdata);
+	$this->course_model->save($newdata);
 
 
 		$message = "Sucessfuly Added to the database";
@@ -100,9 +109,10 @@ class Courses extends BaseController
 
 		$session->setFlashdata('sucess', $message);
 
-		return redirect()->to('/courses');
+		return redirect()->to('/admin_courses');
 	 }
 }
+$data['teacher']= $this->teacher_model->select_users_name_for_teachers();
 	return  view("courses/admin/create_course_admin",$data);
 
 	}
@@ -224,6 +234,22 @@ public function deactivate_course($id)
 		}
 
 
+
+
+
+public function apply_course($cslug)
+{
+		// $data=[];
+		//
+		 $data['course'] = $this->course_model->getCourses($cslug);
+		 $data['batches'] = $this->batches_model->get_all_batches_by_courseId($data['course']['cs_id_pk']);
+			$data['current_batch'] = $this->batches_model->selectbatch($data['course']['cs_id_pk']);
+
+		 return view("courses/students/apply_for_course",$data);
+		//$data['batch'] = $this->batches_model->findAll();
+		//$data['batch'] = $this->batches_model->get_batchBy_ID();
+	//	echo var_dump($data['batches']);
+}
 
 
 

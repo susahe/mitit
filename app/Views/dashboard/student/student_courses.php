@@ -4,7 +4,10 @@
 <div>
 <h3> View All Available profesional courses </h3>
 </div>
-
+<div class="">
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<small> you can filter users by typing any word in the table </small>
+</div>
 <?php if ($courses) :?>
 <table class="table" >
 
@@ -27,7 +30,7 @@
 
   </tr>
 </thead>
-<tbody>
+<tbody id="myTable">
 
 <?php foreach($courses as $course){ ?>
 
