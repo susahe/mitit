@@ -1,4 +1,4 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 <div class="row">
@@ -60,7 +60,7 @@
     <td> <?= $user['address'] ?> </td>
     <td> <?= $user['mobile'] ?> </td>
     <td> <?= $user['nic'] ?> </td>
-    <td colspan="2">   <a href="/log_to_child/<?= $user['user_id']?>" class="btn btn-secondary float-right" type="submit"> View </a> </td>
+    <td colspan="2">   <a href="/log_to_child/<?= $user['student_id_pk']?>" class="btn btn-secondary float-right" type="submit"> View </a> </td>
     <td> <a href="#" class="btn btn-secondary float-right" type="submit"> Activate </a></td>
 
     <?php }?>

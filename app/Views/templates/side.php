@@ -30,6 +30,9 @@
  <li class="nav-item <?=($uri->getSegment(1)=='admin_teachers' ? 'active' : null )?>">
    <a class="nav-link" href="/admin_teachers"> <i class="bi bi-person-fill"></i> Teachers</a>
  </li>
+ <li class="nav-item <?=($uri->getSegment(1)=='admin_staff' ? 'active' : null )?>">
+   <a class="nav-link" href="/admin_staff"> <i class="bi bi-person-fill"></i> Staff</a>
+ </li>
  <li class="nav-item <?=($uri->getSegment(1)=='admin_courses' ? 'active' : null )?>">
    <a class="nav-link" href="/admin_courses"><i class="bi bi-file-person-fill"></i> Courses</a>
  </li>

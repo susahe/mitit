@@ -3,10 +3,10 @@
 use CodeIgniter\Model;
 
 
-class ParentModel extends Model {
-  protected $table ='tbl_parent_student';
-  protected $primaryKey = 'rel_id_pk';
-  protected $allowedFields = ['prt_id_fk','std_id_fk','created','update','status'];
+class StaffModel extends Model {
+  protected $table ='tbl_staff';
+  protected $primaryKey = 'staff_id_pk';
+  protected $allowedFields = ['created','update','status'];
   //protected $beforeInsert = ['beforeInsert'];
   //protected $beforeUpdate = ['beforeUpdate'];
 
@@ -46,30 +46,14 @@ class ParentModel extends Model {
     return $student;
  }}
 
-public function get_all_parent_accounts()
+public function select_users_name_for_staff()
 {
-        $this->join('tbl_student','tbl_student.student_id_pk=tbl_parent_student.prt_id_fk');
-      //  $this->select('tbl_student.mobile,tbl_student.hometel');
-        $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.prt_id_fk');
-        $this->where('tbl_users.user_role','Parent');
-        $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,tbl_student.mobile,tbl_student.hometel');
-        $this->distinct();
-
+      $this->select('*');
+        $this->join('tbl_users','tbl_users.user_id_pk=tbl_staff.staff_id_pk');
+        $this->select('tbl_users.firstname,tbl_users.lastname');
+      //  $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_pk');
         $student = $this->get()->getResultArray();
         return $student;
 }
 
-
-public function get_all_child_accounts()
-{
-  $this->join('tbl_student','tbl_student.student_id_pk=tbl_parent_student.std_id_fk');
-//  $this->select('tbl_student.mobile,tbl_student.hometel');
-  $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
-  $this->where('tbl_users.user_role','Child');
-  $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,tbl_student.mobile,tbl_student.hometel');
-  //$this->distinct();
-
-  $student = $this->get()->getResultArray();
-  return $student;
-}
 }

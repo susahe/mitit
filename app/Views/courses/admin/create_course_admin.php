@@ -117,7 +117,7 @@
   <select class="form-control" id="teacher" name="teacher_id_fk">
 		<?php if ($teacher):?>
 		<?php foreach($teacher as $teacher){?>
-    <option value="<?= $teacher['user_id_fk']?>"> <?= $teacher['firstname']." ".$teacher['lastname']?></option>
+    <option value="<?= $teacher['teacher_id_pk']?>"> <?= $teacher['firstname']." ".$teacher['lastname']?></option>
 	<?php }?>
 <?php else :?>
 <option> There is not teacher in database </option>

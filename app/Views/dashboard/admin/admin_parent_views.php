@@ -1,10 +1,10 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 <div>
-<h3> View All Available profesional courses </h3>
+<h3> All Parent Accounts </h3>
 </div>
-<a class="btn btn-secondary float-right" href="/create_teacher"> Create Teacher </a>
+<a class="btn btn-secondary float-right" href="/create_teacher"> Create Parent </a>
 <?php if ($parents) :?>
 <table class="table" >
 
@@ -32,8 +32,6 @@
 <?php foreach($parents as $parent){ ?>
 
 <tr>
-  <td><a class=" btn btn-primary " href="/course_view/<?=esc($course['csslug'],'url');?>">  <?= $course['id']?></a></td>
-  <td> <a class=" " href="/course_view/<?=esc($course['csslug'],'url');?>"> <?= $course['csname']?></a> </td>
 
 
 
@@ -44,13 +42,12 @@
 
 
 
-  <td> <?= $parent['cstheryhrs']?>  </td>
-  <td> <?= $parent['cspracthrs']?>  </td>
+  <td> <?= $parent['user_id_pk']?>  </td>
+  <td> <?= $parent['firstname']?>  </td>
+  <td> <?= $parent['lastname']?>  </td>
 
-  <td> <?= $parent['csfees']?>  </td>
-  <td> <?= $parent['cstype']?>  </td>
-  <td> <?= $parent['csimage']?>  </td>
-  <td> <?= $parent['csduemonths']?>  </td>
+  <td> <?= $parent['mobile']?>  </td>
+  <td> <?= $parent['hometel']?>  </td>
 
 <td> <a href="#">Apply for Course</a>
 

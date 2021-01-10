@@ -95,62 +95,6 @@ class Teachers extends BaseController
 
 				// Edit users
 
-					public function edit_user(){
-
-								$data=[];
-								helper('form');
-									$model = new UserModel();
-								if ($this->request->getMethod()=='post')
-								{
-									$rules=[
-										'firstname'=> 'required|min_length[3]|max_length[20]',
-										'lastname'=> 'required|min_length[3]|max_length[20]',
-									];
-									if ($this->request->getPost('password')!=''){
-										$rules['password']= 'required|min_length[3]|max_length[20]';
-										$rules['cpassword']= 'matches[password]';
-									}
-
-								 if (! $this->validate($rules)){
-
-									$data['validation']= $this->validator;
-								}
-								 else
-									{
-
-
-									$newdata = [
-										'idusers' => session()->get('id'),
-										'role' => $this->request->getPost('role'),
-										'firstname' => $this->request->getPost('firstname'),
-										'lastname' => $this->request->getPost('lastname'),
-										'email' => $this->request->getVar('email'),
-										'mobile'=> $this->request->getVar('mobile'),
-										'slug' => url_title($this->request->getVar('email')),
-										'update' => date('Y-m-d H:i:s',now()),
-									];
-
-						if ($this->request->getPost('password')!=''){
-							$newdata['password']= $this->request->getPost('password');
-						}
-
-
-								//	echo var_dump($newdata);
-									//$model->update(session()->get('id'),$newdata);
-								//	$model->update($newdata['idusers'], $newdata);
-									$model->save($newdata);
-									session()->setFlashdata('sucess', 'Sucessfully Updated');
-									return redirect()->to('/');
-								 }
-								}
-								$data['user']=$model->where('idusers',session()->get('id'))->first();
-
-
-								return view("users/user_profile_view",$data);
-}
-
-
-
 
 							public function  create_teacher()
 							{
@@ -214,7 +158,7 @@ class Teachers extends BaseController
 
 										$this->user_model->save($userdata);
 										$user_id = $this->user_model->getInsertID();
-										
+
 
 
 									$newdata = [
@@ -229,7 +173,7 @@ class Teachers extends BaseController
 									];
 
 
-											$this->teacher_model->save($newdata);
+											$this->teacher_model->insert($newdata);
 
 
 
@@ -260,6 +204,68 @@ class Teachers extends BaseController
 								 $data['bdate']= $year.'-12-31';
 								 	return  view("/users/teacher/create_teacher",$data);
 								 	}
+
+
+
+
+														public function edit_user(){
+
+																	$data=[];
+																	helper('form');
+																		$model = new UserModel();
+																	if ($this->request->getMethod()=='post')
+																	{
+																		$rules=[
+																			'firstname'=> 'required|min_length[3]|max_length[20]',
+																			'lastname'=> 'required|min_length[3]|max_length[20]',
+																		];
+																		if ($this->request->getPost('password')!=''){
+																			$rules['password']= 'required|min_length[3]|max_length[20]';
+																			$rules['cpassword']= 'matches[password]';
+																		}
+
+																	 if (! $this->validate($rules)){
+
+																		$data['validation']= $this->validator;
+																	}
+																	 else
+																		{
+
+
+																		$newdata = [
+																			'idusers' => session()->get('id'),
+																			'role' => $this->request->getPost('role'),
+																			'firstname' => $this->request->getPost('firstname'),
+																			'lastname' => $this->request->getPost('lastname'),
+																			'email' => $this->request->getVar('email'),
+																			'mobile'=> $this->request->getVar('mobile'),
+																			'slug' => url_title($this->request->getVar('email')),
+																			'update' => date('Y-m-d H:i:s',now()),
+																		];
+
+															if ($this->request->getPost('password')!=''){
+																$newdata['password']= $this->request->getPost('password');
+															}
+
+
+																	//	echo var_dump($newdata);
+																		//$model->update(session()->get('id'),$newdata);
+																	//	$model->update($newdata['idusers'], $newdata);
+																		$model->save($newdata);
+																		session()->setFlashdata('sucess', 'Sucessfully Updated');
+																		return redirect()->to('/');
+																	 }
+																	}
+																	$data['user']=$model->where('idusers',session()->get('id'))->first();
+
+
+																	return view("users/user_profile_view",$data);
+									}
+
+
+
+
+
 
 
 

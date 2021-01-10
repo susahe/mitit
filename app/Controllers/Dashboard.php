@@ -5,6 +5,7 @@ use App\Models\User\TeacherModel;
 use App\Models\Course\CourseModel;
 use App\Models\Batch\BatchModel;
 use App\Models\User\StudentModel;
+use App\Models\User\StaffModel;
 use CodeIgniter\I18n\Time;
 class Dashboard extends BaseController
 {
@@ -13,6 +14,7 @@ class Dashboard extends BaseController
 	private $student_model;
 	private $parent_model;
 	private $teacher_model;
+	private $staff_model;
 	private $batch_model;
 	public function __construct()
 
@@ -26,12 +28,14 @@ class Dashboard extends BaseController
 		$this->parent_model =new ParentModel();
 		$this->teacher_model = new TeacherModel();
 		$this->batch_model = new BatchModel();
+		$this->staff_model = new StaffModel();
 	}
 
 	public function index()
 	{
 		$data = [];
 
+		// this section will display  all dashboards
 
 		$loginUser = session()->get('loginUser');
 		$loginid = session()->get('id');
@@ -98,12 +102,6 @@ class Dashboard extends BaseController
 		$data['users']=$this->user_model->get_all_users();
 		return  view("dashboard/admin/admin_user_views",$data);
 	}
-	public function admin_student_views()
-	{
-		$data=[];
-		$data['students'] = $this->student_model->get_all_student_with_username();
-		return  view("dashboard/admin/admin_student_views",$data);
-	}
 	public function admin_teacher_views()
 	{
 		$data=[];
@@ -111,11 +109,33 @@ class Dashboard extends BaseController
 			$data['teachers']= $this->teacher_model->select_users_name_for_teachers();
 		return  view("dashboard/admin/admin_teacher_views",$data);
 	}
+	public function admin_staff_views()
+	{
+		$data=[];
+		$data['courses'] = $this->cs_model->getCourses();
+			$data['staffs']= $this->staff_model->select_users_name_for_staff();
+		return  view("dashboard/admin/admin_staff_views",$data);
+	}
+	public function admin_student_views()
+	{
+		$data=[];
+		$data['students'] = $this->student_model->get_all_student_with_username();
+		return  view("dashboard/admin/admin_student_views",$data);
+	}
+
 	public function admin_parent_views()
 	{
+		// This function list down all parents
 		$data=[];
 		$data['parents'] = $this->parent_model->get_all_parent_accounts();
 		return  view("dashboard/admin/admin_parent_views",$data);
+	}
+	public function admin_child_views()
+	{
+		// This function list down all parents
+		$data=[];
+		$data['child'] = $this->parent_model->get_all_child_accounts();
+		return  view("dashboard/admin/admin_child_views",$data);
 	}
 		public function admin_course_views()
 		{

@@ -77,7 +77,7 @@ class Batches extends BaseController
 
 									'batch_code' => $this->request->getVar('batch_code'),
 
-									'teacher_batch_id_fk' => $this->request->getVar('teacher_batch_id_fk'),
+									'teacher_batch_id_fk' => $this->request->getVar('teacher_id_pk'),
 									'batch_year' => $this->request->getVar('batch_year'),
 									'max_students' => $this->request->getVar('max_students'),
 											'course_id_fk' => $this->request->getVar('course_id_fk'),
@@ -98,7 +98,7 @@ class Batches extends BaseController
 							 }
 						}
 								$data['courses'] = $this->course_model->get_course_list();
-								$data['teacher']= $this->teacher_model->select_users_name_for_teachers();
+								$data['teacher']= $this->teacher_model->select_course_teacher($data['courses']['']);
 								return view('/courses/admin/create_batch_admin',$data);
 
 									}

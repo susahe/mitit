@@ -12,7 +12,6 @@ class Users extends BaseController
 				private $mail;
 				private $curd;
 
-
 				public function __construct()
 									{
 										helper('form');
@@ -26,15 +25,9 @@ class Users extends BaseController
 				//  load all users in the admin Dasbhboard
 				public function index()
 						{
-							//>orderBy('created', 'desc') ->findAll(
-							$data=[
-										'users' => $this->model->orderBy('created','DESC')->paginate(5),
-										'pager' => $this->model->pager,
-										];
 
-							//	echo var_dump($data);
 
-							echo view("users/users_view",$data);
+
 						}
 
 				public function view_profile($slug=null)
@@ -49,73 +42,15 @@ class Users extends BaseController
 													return  view("users/user_profile_view",$data);
 						}
 
-						public function user_profile()
+				public function user_profile()
 								{
 									$data['user']=$this->user_model->where('user_id_pk',session()->get('id'))->first();
 									return view("users/user_profile",$data);
 
 								}
 
-				public function create_user()
-					{
 
-										$data=[];
-										if ($this->request->getMethod()=='post')
-										{
-														$rules=
-																		[
-																					'firstname'=> 'required|min_length[3]|max_length[20]',
-																					'lastname'=> 'required|min_length[3]|max_length[100]',
-																					'email'=> 'required|min_length[5]|max_length[50]|valid_email|is_unique[tbl_users.email]',
-																					'password'=> 'required|min_length[8]|max_length[255]',
-
-																					'cpassword'=>
-																						[
-																							'label' => "Confirm Password",
-																							'rules'=> 'matches[password]',
-																							'errors'=> [
-																															'matches'=>" Confirm password should be match with password"
-																												 ]
-																						]
-
-																		 ];
-									 					if (! $this->validate($rules))
-														{
-																					$data['validation']= $this->validator;
-														}
-															else
-														{
-															$newdata =
-																			[
-																				'email' => $this->request->getVar('email'),
-																				'password' => $this->request->getVar('password'),
-																				'user_role' => "Student",
-																				'firstname' => $this->request->getVar('firstname'),
-																				'lastname' => $this->request->getVar('lastname'),
-																				'slug' => url_title($this->request->getVar('email')),
-																			];
-
-															$this->user_model->save($newdata);
-															$user_id = $this->user_model->getInsertID();
-															$myTime = new Time('now');
-															$time = Time::parse($myTime);
-															$number = sprintf('%04d',$user_id);
-															$preregid = $time->getYear().$number;
-															$gmail =$newdata['email'];
-															$subject = "Application has submited successfully with pre-registraion id"."  ".$preregid." "."to your"." ".$gmail." "."emaill address";
-															$body= "Your Application successfully submited and your Pre Registred id  is"." ".$preregid." ". "Plase keep this with you for futrue refrence and first log to your account to active. after using this code then your account will be activated.  Your Application Staus is Inactive <a href='http://localhost:8080/activate_user_account/'>click here to activate<a>,";
-															$email_message=	$this->mail->user_reg_sendmail($gmail,$subject,$body);
-															$message =$subject;
-															$session= session();
-															$session->setFlashdata('sucess', $message);
-															return redirect()->to('/');
-													 }
-								}
-
-								return  view("users/create_user",$data);
-				}
-
-						// Assingn session to Users
+					// Assingn session to Users
 				private function setUserSession($user)
 						{
 
@@ -226,7 +161,7 @@ class Users extends BaseController
 																[
 																	'email' => $this->request->getVar('email'),
 																	'password' => $this->request->getVar('password'),
-																	'user_role' => "Student",
+																	'user_role' => $this->request->getVar('role'),
 																	'firstname' => $this->request->getVar('firstname'),
 																	'lastname' => $this->request->getVar('lastname'),
 																	'slug' => url_title($this->request->getVar('email')),
@@ -253,8 +188,7 @@ class Users extends BaseController
 				}
 
 				// Activate user account after creating
-				public function activate_user_account()
-				{
+				public function activate_user_account(){
 									$data=[];
 									if ($this->request->getMethod()=='post')
 									{
@@ -293,7 +227,7 @@ class Users extends BaseController
 
 
 														if  (($this->request->getVar('activatekey')==$preregid)&& $this->request->getVar('email')==$data['user']['email']){
-																$this->curd->change_status($user_id,$tblid="user_id_pk",$status=0,$this->user_model);
+																	$this->user_model->change_status($id,$status=0,);
 
 																//echo var_dump($data);
 																print_r($preregid);
@@ -314,65 +248,9 @@ class Users extends BaseController
 							return  view("users/activate_user_account",$data);
 				}
 
-				public function create_user_by_system()
-					{
-										$data=[];
-										if ($this->request->getMethod()=='post')
-										{
-														$rules=
-																		[
-																					'firstname'=> 'required|min_length[3]|max_length[20]',
-																					'lastname'=> 'required|min_length[3]|max_length[100]',
-																					'email'=> 'required|min_length[5]|max_length[50]|valid_email|is_unique[users.email]',
-																					'password'=> 'required|min_length[8]|max_length[255]',
 
-																					'cpassword'=>
-																						[
-																							'label' => "Confirm Password",
-																							'rules'=> 'matches[password]',
-																							'errors'=> [
-																															'matches'=>" Confirm password should be match with password"
-																												 ]
-																						]
-																		 ];
-									 if (! $this->validate($rules))
-															{
-																					$data['validation']= $this->validator;
-															}
-									else
-											{
-															$newdata =
-																			[
-																				'email' => $this->request->getVar('email'),
-																				'password' => $this->request->getVar('password'),
-																				'user_role' => $this->request->getVar('role'),
-																				'firstname' => $this->request->getVar('firstname'),
-																				'lastname' => $this->request->getVar('lastname'),
 
-																				'slug' => url_title($this->request->getVar('email')),
-																			];
-															$this->user_model->save($newdata);
-															$user_id = $this->user_model->getInsertID();
-															$myTime = new Time('now');
-															$time = Time::parse($myTime);
-															$number = sprintf('%04d',$user_id);
-															$preregid = $time->getYear().$number;
-															$gmail =$newdata['email'];
-															$subject = "Application has submited successfully with pre-registraion id"."  ".$preregid." "."to your"." ".$gmail." "."emaill address";
-															$body= "Your Application successfully submited and your Pre Registred id  is"." ".$preregid." ". "Plase keep this with you for futrue refrence and first log to your account to active. after using this code then your account will be activated.  Your Application Staus is Inactive <a href='http://localhost:8080/activate_user_account/'>click here to activate<a>,";
-															$email_message=	$this->mail->user_reg_sendmail($gmail,$subject,$body);
-															$message =$subject;
-															$session= session();
-															$session->setFlashdata('sucess', $message);
-															return redirect()->to('/');
-													}
-								}
-
-								return  view("users/create_user",$data);
-				}
-
-				public function admin_edit_users($slug)
-				{
+				public function admin_edit_users($slug){
 					//	$user_model = new Useruser_model();
 							$data['user'] = $this->user_model->getusers($slug);
 
@@ -430,29 +308,21 @@ class Users extends BaseController
 									return view("users/user_profile_view",$data);
 				}
 
-				public function search(){
-
-        $search=$this->request->getVar('search');
-        $db= \Config\Database::connect();
-        $builder = $db->table('users');
-       $builder->like('firstname',$search);
-			 $builder->orLike('lastname',$search);
-      $query=$builder->get();
-        $q=$query->getResultArray();
-
-    $data['r']=$q;
-
-    return view('users/users_view',$data);
-}
-
-// create person profile
-
-
-public function profile_person_view()
-{
+				public function profile_person_view(){
 	return redirect()->to('/create_person_profile');
 
 
 }
+
+				public function search(){
+						$search=$this->request->getVar('search');
+						$db= \Config\Database::connect();
+						$builder = $db->table('users');
+						$builder->like('firstname',$search);
+						$builder->orLike('lastname',$search);
+						$query=$builder->get();
+						$q=$query->getResultArray();
+						$data['r']=$q;
+						return view('users/users_view',$data);}
 
 }

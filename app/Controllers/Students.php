@@ -234,7 +234,7 @@ public function create_child_account()
 
 				//	$user_model = new Useruser_model();
 			$newdata = [
-				'user_id' => $child_id,
+				'student_id_pk' => $child_id,
 				'address' => $this->request->getVar('address'),
 				'gender' => $this->request->getVar('gender'),
 				'nic' => $this->request->getVar('nic'),
@@ -246,7 +246,7 @@ public function create_child_account()
 
 
 
-	 $this->student_model->save($newdata);
+	 $this->student_model->insert($newdata);
 
 	   $parent_child = [
 
@@ -306,7 +306,7 @@ public function create_child_account()
 	}
 
 
-
+  
 
 public function add_child_account()
 {

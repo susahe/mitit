@@ -1,4 +1,4 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 
@@ -20,7 +20,7 @@
 
 								<form class="" action="/create_student_profile" method="post">
 									<div class="row">
-									
+
 
 
 										<div class="col-12 col-sm-4">

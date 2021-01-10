@@ -21,7 +21,7 @@ class TeacherModel extends Model {
 
 
     $this->select('*');
-    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.user_id_fk');
+    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_pk');
       $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,');
 
 
@@ -29,6 +29,18 @@ class TeacherModel extends Model {
     return $student;
   }
 
+
+  public function select_course_teacher($csid)
+  {
+
+    $this->join('tbl_courses','tbl_courses.teacher_id_fk=tbl_teacher.teacher_id_pk');
+    $this->where('tbl_courses.cs_id_pk',$csid);
+    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_pk');
+    $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,');
+    $teacher = $this->get()->getResultArray();
+    return $teacher;
+
+  }
 
   public function select_student_name_for_course()
   {

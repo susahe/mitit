@@ -1,4 +1,4 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 <div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
