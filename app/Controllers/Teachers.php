@@ -162,7 +162,7 @@ class Teachers extends BaseController
 
 
 									$newdata = [
-										'user_id_fk' => $user_id,
+										'teacher_id_fk' => $user_id,
 										'address' => $this->request->getVar('address'),
 										'gender' => $this->request->getVar('gender'),
 										'nic' => $this->request->getVar('nic'),

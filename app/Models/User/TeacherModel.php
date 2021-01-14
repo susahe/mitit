@@ -5,8 +5,8 @@ use CodeIgniter\Model;
 
 class TeacherModel extends Model {
   protected $table ='tbl_teacher';
-  protected $primaryKey = 'teacher_id_pk';
-  protected $allowedFields = ['address','nic','birthdate','mobile','hometel','slug','teacher_status','user','created','update'];
+  protected $primaryKey = 'id';
+  protected $allowedFields = ['teacher_id_fk','address','nic','birthdate','mobile','hometel','slug','teacher_status','user','created','update'];
   //protected $beforeInsert = ['beforeInsert'];
   //protected $beforeUpdate = ['beforeUpdate'];
 
@@ -21,7 +21,7 @@ class TeacherModel extends Model {
 
 
     $this->select('*');
-    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_pk');
+    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_fk');
       $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,');
 
 
@@ -30,13 +30,13 @@ class TeacherModel extends Model {
   }
 
 
-  public function select_course_teacher($csid)
+  public function select_course_teacher()
   {
 
-    $this->join('tbl_courses','tbl_courses.teacher_id_fk=tbl_teacher.teacher_id_pk');
-    $this->where('tbl_courses.cs_id_pk',$csid);
-    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_pk');
-    $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,');
+    $this->join('tbl_courses','tbl_courses.teacher_id_fk=tbl_teacher.teacher_id_fk');
+    //$this->where('tbl_courses.cs_id_pk',$csid);
+    $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_fk');
+    $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,tbl_courses.cs_id_pk');
     $teacher = $this->get()->getResultArray();
     return $teacher;
 

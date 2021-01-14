@@ -34,14 +34,7 @@ class CourseModel extends Model {
 
     }
 
-    public function get_course_list()
-    {
-      $this->select('cs_id_pk,csname');
-      $courselist = $this->get()->getResultArray();
-      return $courselist;
 
-
-    }
 
     public function selectCourseById($course_id)
     {
@@ -53,6 +46,38 @@ class CourseModel extends Model {
 
 
 
+      public function get_course_list1()
+      {
+        $this->select('cs_id_pk,csname');
+        $courselist = $this->get()->getResultArray();
+        return $courselist;
+        $this->join('tbl_courses','tbl_courses.teacher_id_fk=tbl_teacher.teacher_id_pk');
+        //$this->where('tbl_courses.cs_id_pk',$csid);
+        $this->join('tbl_users','tbl_users.user_id_pk=tbl_teacher.teacher_id_pk');
+        $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,tbl_courses.cs_id_pk');
+        $teacher = $this->get()->getResultArray();
+        return $teacher;
+
+      }
+
+
+
+
+          public function get_course_list()
+          {
+      $this->select('cs_id_pk,csname,teacher_id_fk');
+
+      //$this->where('tbl_courses.cs_id_pk',$csid);
+      $this->join('tbl_users','tbl_courses.teacher_id_fk=tbl_users.user_id_pk');
+      $this->select('tbl_users.user_id_pk,tbl_users.firstname,tbl_users.lastname,tbl_courses.cs_id_pk');
+      $teacher = $this->get()->getResultArray();
+      return $teacher;
+
+      $courselist = $this->get()->getResultArray();
+      return $courselist;
+
+
+    }
 
 
 
@@ -139,6 +164,13 @@ public function enrollCourses($userid)
 
 }
 
+public function selectteacherid($csid){
+  $result = $this->select('teacher_id_fk')
+      ->where('cs_id_pk',$csid)
+      ->first();
 
+  return $result;
+
+}
 
 }

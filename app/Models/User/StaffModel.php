@@ -39,8 +39,8 @@ class StaffModel extends Model {
     $this->where('prt_id_fk', $p_id);
     $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
     $this->select('tbl_users.firstname,tbl_users.lastname');
-    $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_pk');
-    $this->select('tbl_student.student_id_pk');
+    $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_fk');
+    $this->select('tbl_student.student_id_fk');
 
     $student = $this->get()->getResultArray();
     return $student;
@@ -51,7 +51,7 @@ public function select_users_name_for_staff()
       $this->select('*');
         $this->join('tbl_users','tbl_users.user_id_pk=tbl_staff.staff_id_pk');
         $this->select('tbl_users.firstname,tbl_users.lastname');
-      //  $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_pk');
+      //  $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_fk');
         $student = $this->get()->getResultArray();
         return $student;
 }

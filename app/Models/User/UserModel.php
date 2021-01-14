@@ -38,6 +38,15 @@ class UserModel extends Model
         return $data;
       }
 
+
+      public function get_child_from_id($id)
+      {
+        $this->select('firstname,lastname');
+        $this->where('user_id_pk',$id);
+        return $this->asArray()->first();
+      }
+
+
       // get user form his or him email
       public function getuser_from_email($email)
       {
@@ -60,6 +69,9 @@ class UserModel extends Model
                      ->where(['user_id_pk' => $id])
                      ->first();
       }}
+
+
+
 
       public function get_all_users($slug = false)
       {

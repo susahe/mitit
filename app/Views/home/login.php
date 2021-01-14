@@ -52,7 +52,7 @@
 			<?php endif; ?>
 			<div class="col-12"">
 				<hr/>
-				<div class="text-center"><small><a href="#"> Help </a> <a href="#">Privacy </a> <a href="#"> Terms</a> | Contact : 011 2226361/077 3051133 <a href="/activate_user_account"> activate user account</a></small>
+				<div class="text-center"><small><a href="#"> Help </a> <a href="#">Privacy </a> <a href="#"> Terms</a> | Contact : 011 2226361/077 3051133 <a href="/activate_user_account"> Activate user account</a><a href="/change_password">  Change passowrd</small>
 				</div>
 			</div>
   </div>

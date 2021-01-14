@@ -81,40 +81,28 @@ class Courses extends BaseController
 	}
 	 else
 		{
-
-
-
 		$newdata = [
-
 			'csname' => $this->request->getVar('csname'),
 			'cstheryhrs' => $this->request->getVar('cstheryhrs'),
 			'cspracthrs' => $this->request->getVar('cspracthrs'),
-
 			'csprojecthrs' => $this->request->getVar('csprojecthrs'),
 			'csfees' => $this->request->getVar('csfees'),
 			'cstype' => $this->request->getVar('cstype'),
 			'csperyear' => $this->request->getVar('csperyear'),
-		//	'csimage' => $this->request->getVar('csimage'),
+		//'csimage' => $this->request->getVar('csimage'),
 			'csduemonths' => $this->request->getVar('csduemonths'),
 			'teacher_id_fk' => $this->request->getVar('teacher_id_fk'),
-		'csslug' => url_title($this->request->getVar('csname').$this->request->getVar('teacher_id_fk')),
-		];
-
+			'csslug' => url_title($this->request->getVar('csname').$this->request->getVar('teacher_id_fk')),
+	];
 	$this->course_model->save($newdata);
-
-
-		$message = "Sucessfuly Added to the database";
-
-		$session= session();
-
-		$session->setFlashdata('sucess', $message);
-
-		return redirect()->to('/admin_courses');
-	 }
-}
-$data['teacher']= $this->teacher_model->select_users_name_for_teachers();
+	$message = "Sucessfuly Added to the database";
+	$session= session();
+	$session->setFlashdata('sucess', $message);
+	return redirect()->to('/admin_courses');
+	}
+	}
+	$data['teacher']= $this->teacher_model->select_users_name_for_teachers();
 	return  view("courses/admin/create_course_admin",$data);
-
 	}
 
 

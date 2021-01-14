@@ -1,4 +1,4 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 
@@ -10,12 +10,36 @@
 		<h6> Remaining Students: </h6>
 	</div>
 </div>
-<div class="col=12 col-sm-12">
+
 		<h3> Create Batch  </h3>
 
 			<div class="card col=12 col-sm-12">
 
 				<h1></h1>
+				<div class="col-12 col-sm-12">
+					<div class="form-group">
+
+
+		<form class="" action="#" method="post">
+
+
+
+
+				<input type="submit" name="" value="Add">
+
+</form>
+
+
+<?php
+    if(isset($_POST['Add'])){ // Check if form was submitted
+
+        $input = $_POST['course_id_fk']; // Get input text
+        $message = "Success! You entered: " . $input;
+    }
+?>
+
+
+				<div class="col=12 col-sm-12">
 				<form class="" action="/create_batch" method="post">
 					<div class="row">
 
@@ -36,6 +60,9 @@
 
 
 
+										<small> select the teacher from here </small>
+										</div>
+
 
 
 
@@ -49,22 +76,7 @@
 
 
 
-					<div class="col-12 col-sm-6">
-						<div class="form-group">
 
-			<select class="form-control" id="course" name="course_id_fk">
-			<?php if ($courses):?>
-			<?php foreach($courses as $course){?>
-			<option value="<?= $course['cs_id_pk']?>"> <?=$course['csname']?></option>
-			<?php }?>
-			<?php else :?>
-			<option> There is not teacher in database </option>
-			<?php endif; ?>
-			</select>
-			<small> select the teacher from here </small>
-			</div>
-
-					</div>
 
 					<div class="col-12 col-sm-6">
 								<div class="form-group">
@@ -84,6 +96,30 @@
 
 
 
+
+						<select class="form-control" id="course" name="course_id_fk">
+						<?php if ($courses):?>
+						<?php foreach($courses as $course){?>
+						<option value="<?= $course['cs_id_pk']?>"> <?=$course['csname']?></option>
+						<?php }?>
+						<?php else :?>
+						<option> There is not teacher in database </option>
+						<?php endif; ?>
+						</select>
+						<small> select the teacher from here </small>
+						</div>
+
+
+
+						<select class="form-control" id="teacher" name="teacher_batch_id_fk">
+ 					<?php if ($courses):?>
+ 					<?php foreach($courses as $course){?>
+ 					 <option value="<?= $course['cs_id_pk']?>"> <?=$course['firstname']." ".$course['lastname']?></option>
+ 					 <?php }?>
+ 					 <?php else :?>
+ 					 <option> There is not teacher in database </option>
+ 					 <?php endif; ?>
+ 					 </select>
 
 
 						<?php if (isset($validation)): ?>
@@ -107,7 +143,23 @@
 </div>
 
 </div>
+<script>
+					$('#course').change(function() {
+					  $('#teacher option').hide();
+					  $('#teacher option[value="' + $(this).val() + '"]').show();
+					  // add this code to select 1'st of streets automaticaly
+					  // when city changed
+					  if ($('#teacher option[value="' + $(this).val() + '"]').length) {
+					    $('#teacher option[value="' + $(this).val() + '"]').first().prop('selected', true);
+					  }
+					  // in case if there's no corresponding street:
+					  // reset select element
+					  else {
+					    $('#teacher').val('');
+					  };
+					});
 
+</script>
 
 
 <?= $this->endSection() ?>

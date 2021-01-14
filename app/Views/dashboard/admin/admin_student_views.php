@@ -44,7 +44,7 @@
 
 
 
-  <td> <?= $student['student_id_pk']?> </td>
+  <td> <?= $student['student_id_fk']?> </td>
   <td> <?= $student['firstname']?>  </td>
   <td> <?= $student['lastname']?>  </td>
   <td> <?= $student['gender']?>  </td>

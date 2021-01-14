@@ -1,4 +1,4 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 <div class="col-12 col-sm-12  pb-3 bg-white form-wrapper">
@@ -15,12 +15,12 @@
 
 
 
-
+  <form class="" action="/apply_for_batch" method="post">
       <?php if ($batches):?>
 
       <?php foreach($batches as $batch){?>
 
-          <form class="" action="/apply_for_batch/<?= $batch['course_id_fk']?>" method="post">
+
           <input type="text" name="std_register_id_fk" value="<?= $_SESSION['id']?>" >
           <input type="text" name="batch_std_reg_id_fk" value="<?= $batch['batch_id_pk']?>" >
           <input type="text" name="teacher_stdregister_id_fk" value="<?= $batch['teacher_batch_id_fk']?>" >
@@ -34,7 +34,7 @@
           </div>
           <h5 class="mb-1 d-flex justify-content-between align-items-center">
             Maximum students :
-            <span class="badge badge-secondary"><?=$batch['max_batch_students']?></span> </h5>
+            <span class="badge badge-secondary"><?=$batch['max_students']?></span> </h5>
             <h5 class="mb-1 d-flex justify-content-between align-items-center">
    Current students<span class="badge badge-secondary"><?=$batch['curent_students']?></h5>
           <div class="text-center">
@@ -45,9 +45,10 @@
       </div>
 
     </div>
-      </form>
+
     <?php }?>
     <?php else :?>
+
     <option> There is not Batch created for this course </option>
     <?php endif; ?>
 
@@ -59,7 +60,7 @@
 
 
 
-
+</form>
 
 
 

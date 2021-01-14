@@ -23,10 +23,10 @@
 
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-<a class="dropdown-item" href="/user_profile"><span class="glyphicon glyphicon-user"></span></a>
-      <a class="dropdown-item" href="/user_profile"><span class="glyphicon glyphicon-user"></span>User Profile</a>
 
-      <a class="dropdown-item" href="/admin_settings">Settings</a>
+      <a class="dropdown-item" href="/user_chagne_password"><span class="glyphicon glyphicon-user"></span>Change Password</a>
+
+
      <a class="dropdown-item" href="/logout">Logout</a>
     </div>
   </li>

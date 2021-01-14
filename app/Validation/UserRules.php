@@ -51,6 +51,22 @@ public function is_notindb(string $str, string $fields, array $data):bool
     return true;
 }
 
+
+
+public function is_password_exist(string $str, string $fields, array $data):bool
+{
+  $model = new UserModel();
+  $user = $model->where('email',$data['email'])
+        ->first();
+
+  if (!$user)
+    return false;
+
+
+    return password_verify($data['current_password'],$user['password']);
+
+}
+
   public function validateUser(string $str, string $fields, array $data):bool
   {
 

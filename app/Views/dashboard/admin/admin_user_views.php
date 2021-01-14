@@ -58,7 +58,7 @@
 
 
     <?php }?>
-<td> <a href="/admin_edit_users/<?=esc($user['slug'],'url');?>" data-toggle="tooltip" data-placement="top" title="view more about users"><i class="bi bi-chevron-compact-right"></i></a> </td>
+<td> <a href="/admin_edit_users/<?=$user['user_id_pk'];?>" data-toggle="tooltip" data-placement="top" title="view more about users"><i class="bi bi-chevron-compact-right"></i></a> </td>
 </tr>
 <?php } ?>
 </tbody>

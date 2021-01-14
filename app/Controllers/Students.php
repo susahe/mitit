@@ -302,11 +302,11 @@ public function create_child_account()
 	 $year = $time->getYear()-6;
 	 $data['bdate']= $year.'-12-31';
 	//	$data['user']=$this->user_model->where('id',session()->get('id'))->first();
-	return view("users/student/student_profile",$data);
+	return view("users/student/child/create_child_profile",$data);
 	}
 
 
-  
+
 
 public function add_child_account()
 {
@@ -315,6 +315,8 @@ public function add_child_account()
 	$time = Time::parse($myTime);
 	$year = $time->getYear()-6;
 	$data['bdate']= $year.'-12-31';
+		$loginid = session()->get('id');
+		//	$data['childs'] = $this->user_model->get_child_from_id($loginid);
 			return view("users/student/child/create_child_profile",$data);
 
 }

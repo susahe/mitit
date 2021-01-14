@@ -2,6 +2,7 @@
 use App\Models\User\UserModel;
 use App\Models\User\ParentModel;
 use App\Models\User\TeacherModel;
+use App\Models\User\ProfileModel;
 use App\Models\Course\CourseModel;
 use App\Models\Batch\BatchModel;
 use App\Models\User\StudentModel;
@@ -9,13 +10,14 @@ use App\Models\User\StaffModel;
 use CodeIgniter\I18n\Time;
 class Dashboard extends BaseController
 {
-	private $model;
+
 	private $csmodel;
 	private $student_model;
 	private $parent_model;
 	private $teacher_model;
 	private $staff_model;
 	private $batch_model;
+	private $profile_model;
 	public function __construct()
 
 	{
@@ -29,6 +31,7 @@ class Dashboard extends BaseController
 		$this->teacher_model = new TeacherModel();
 		$this->batch_model = new BatchModel();
 		$this->staff_model = new StaffModel();
+		$this->profile_model = new ProfileModel();
 	}
 
 	public function index()
@@ -36,49 +39,53 @@ class Dashboard extends BaseController
 		$data = [];
 
 		// this section will display  all dashboards
-
 		$loginUser = session()->get('loginUser');
 		$loginid = session()->get('id');
+		$is_created= $this->profile_model->is_created($loginid);
+		if ($is_created){
+				$message = "Please complete your profile before you proceed";
 
+			return  view("dashboard/profile_create",$data);
+
+		}
+	else {
 		if ($loginUser=="Student") {
-
 			$data['childs'] = $this->parent_model->select_students_from_parent($loginid);
+
 			return  view("dashboard/student/student_dashboard",$data);
 		}
-
 		elseif ($loginUser=="Child"){
 			$data=[];
 
 			return  view("dashboard/child/child_dashboard",$data);
-
 		}
 		elseif ($loginUser=="Teacher"){
 			$data=[];
 
 			return  view("dashboard/teacher/teacher_dashboard",$data);
-
 		}
 		elseif ($loginUser=="Staff"){
 			$data=[];
 
 			return  view("dashboard/staff/staff_dashboard",$data);
-
 		}
 		elseif ($loginUser=="Parent"){
 			$data=[];
 
 			return  view("dashboard/parent/parent_dashboard",$data);
-
 		}
-
 		elseif ($loginUser=="Admin"){
 			$data=[];
 
-
 			return  view("dashboard/admin/admin_dashboard",$data);
-
 		}
+		else
+		{
+			$data=[];
 
+			return  view("dashboard/user/user_dashboard",$data);
+		}
+	}
 	}
 
 
@@ -391,54 +398,48 @@ class Dashboard extends BaseController
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public function course_select($rest)
-	{
-		$session = session();
-		$session->set('cstype',$rest);
-		if ($rest==1){
-			$session->set('is_parent',0);
+		// ---------------------------------------User Dashobard  ----------------------------------
+		public function user_profile_view($id)
+		{
+			$data=[];
+			$myTime = new Time('now');
+			$time = Time::parse($myTime);
+			$year = $time->getYear()-6;
+			$data['bdate']= $year.'-12-31';
+	//		$data['courses'] = $this->cs_model->getCourses();
+			$data['users'] = $this->user_model->getuser_from_id($id);
+			$data['profile'] = $this->profile_model->get_userprofile_from_id($id);
+			return  view("dashboard/profile_view",$data);
 		}
-		else{
-			$session->set('is_parent',1);
+
+		public function user_courses()
+		{
+			$data=[];
+			$data['courses'] = $this->cs_model->getCourses();
+			return  view("dashboard/user/user_course_views",$data);
 		}
-		return redirect()->to('/dashboard');
 
-	}
+		public function user_schedules()
+		{
+			$data=[];
+			$data['payment'] = '';
+			return  view("dashboard/user/user_schedules",$data);
+		}
+
+		public function user_grades()
+		{
+			$data=[];
+			$data['payment'] = '';
+			return  view("dashboard/user/user_grades",$data);
+		}
+
+		public function user_payments()
+		{
+			$data=[];
+			$data['payment'] = '';
+			return  view("dashboard/user/user_payments",$data);
+		}
 
 
-	public function view_guest_course()
-	{
-		$data= [];
-		$data['course_school'] = 	$this->csmodel->getSchoolStudentCourseList();
-		$data['course_school_leaver'] = 	$this->csmodel->getSchoolLeaversCourseList();
-
-		return  view("dashboard/guest/courses/guest_courses",$data);
-		echo var_dump($data);
-	}
 
 }

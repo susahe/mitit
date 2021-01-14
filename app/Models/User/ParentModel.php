@@ -39,8 +39,8 @@ class ParentModel extends Model {
     $this->where('prt_id_fk', $p_id);
     $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
     $this->select('tbl_users.firstname,tbl_users.lastname');
-    $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_pk');
-    $this->select('tbl_student.student_id_pk');
+    $this->join('tbl_student','tbl_users.user_id_pk=tbl_student.student_id_fk');
+    $this->select('tbl_student.student_id_fk');
 
     $student = $this->get()->getResultArray();
     return $student;
@@ -48,7 +48,7 @@ class ParentModel extends Model {
 
 public function get_all_parent_accounts()
 {
-        $this->join('tbl_student','tbl_student.student_id_pk=tbl_parent_student.prt_id_fk');
+        $this->join('tbl_student','tbl_student.student_id_fk=tbl_parent_student.prt_id_fk');
       //  $this->select('tbl_student.mobile,tbl_student.hometel');
         $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.prt_id_fk');
         $this->where('tbl_users.user_role','Parent');
@@ -62,7 +62,7 @@ public function get_all_parent_accounts()
 
 public function get_all_child_accounts()
 {
-  $this->join('tbl_student','tbl_student.student_id_pk=tbl_parent_student.std_id_fk');
+  $this->join('tbl_student','tbl_student.student_id_fk=tbl_parent_student.std_id_fk');
 //  $this->select('tbl_student.mobile,tbl_student.hometel');
   $this->join('tbl_users','tbl_users.user_id_pk=tbl_parent_student.std_id_fk');
   $this->where('tbl_users.user_role','Child');
