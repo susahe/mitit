@@ -107,7 +107,7 @@ class Dashboard extends BaseController
 		$data=[];
 
 		$data['users']=$this->user_model->get_all_users();
-		return  view("dashboard/admin/admin_user_views",$data);
+		return  view("dashboard/admin/users/view",$data);
 	}
 	public function admin_teacher_views()
 	{

@@ -1,13 +1,13 @@
-<?= $this->extend('home/dashboard') ?>
+<?= $this->extend('templates/dashboard') ?>
 <?= $this->Section('content') ?>
 
 <div class="row">
 
 		<div class="container">
-		
+
 			<div class="col-12 col-md-12 col- pb-3 bg-white form-wrapper">
 			<h3> Create your account  </h3>
-				<form class="" action="/create_user_system" method="post">
+				<form class="" action="/admin/users/create" method="post">
 					<div class="row">
 
 						<div class="col-12 col-sm-6">

@@ -16,7 +16,7 @@
    <a class="nav-link" href="/user/profile/view/<?=(session()->get('id'))?>"> <i class="bi bi-file-person-fill"></i>  Profile View</a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='admin_users' ? 'active' : null )?>">
-   <a class="nav-link"  href="/admin/user/view"> <i class="bi bi-person-fill"></i> Users</a>
+   <a class="nav-link"  href="/admin/users/view"> <i class="bi bi-person-fill"></i> Users</a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='admin_students' ? 'active' : null )?>">
    <a class="nav-link"  href="/admin/students/view/"> <i class="bi bi-person-fill"></i> Students</a>
@@ -31,7 +31,7 @@
    <a class="nav-link"  href="/admin/teachers/view/"> <i class="bi bi-person-fill"></i> Teachers</a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='admin_staff' ? 'active' : null )?>">
-   <a class="nav-link"  href="/user/staff/view/"> <i class="bi bi-person-fill"></i> Staff</a>
+   <a class="nav-link"  href="/admin/staff/view/"> <i class="bi bi-person-fill"></i> Staff</a>
  </li>
  <li class="nav-item <?=($uri->getSegment(1)=='admin_courses' ? 'active' : null )?>">
    <a class="nav-link"  href="/admin/courses/view/"><i class="bi bi-file-person-fill"></i> Courses</a>

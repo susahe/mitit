@@ -7,7 +7,7 @@
 <small> you can filter users by typing any word in the table </small>
 </div>
 
-<a class="btn btn-secondary float-right" href="/system_created_users" data-toggle="tooltip" data-placement="top" title="Create User Click here"> Create User </a>
+<a class="btn btn-secondary float-right" href="/admin/users/create" data-toggle="tooltip" data-placement="top" title="Create User Click here"> Create User </a>
 
 <div>
 
@@ -44,7 +44,7 @@
      ?>
 
     <td>
-      <a class="  " type="submit" href="/activate_user/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/inactive_user.png');?>"></a>
+      <a class="  " type="submit" href="/admin/users/activate/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/inactive_user.png');?>"></a>
 
 
     </td>
@@ -53,12 +53,12 @@
     else
     { ?>
       <td>
-      <a class="  " href="/deactivate_user/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/active_user.png');?>" ></a>
+      <a class="  " href="/admin/users/deactivate/<?=$user['user_id_pk'];?>"><img class="userstatus" src="<?php echo base_url('img/active_user.png');?>" ></a>
 
 
 
     <?php }?>
-<td> <a href="/admin_edit_users/<?=$user['user_id_pk'];?>" data-toggle="tooltip" data-placement="top" title="view more about users"><i class="bi bi-chevron-compact-right"></i></a> </td>
+<td> <a href="/admin/users/edit/<?=$user['user_id_pk'];?>" data-toggle="tooltip" data-placement="top" title="view more about users"><i class="bi bi-chevron-compact-right"></i></a> </td>
 </tr>
 <?php } ?>
 </tbody>

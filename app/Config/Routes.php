@@ -72,9 +72,13 @@ $routes->get('logout', 'Home::logout',['filter'=>'auth']);
 
 $routes->group('user',function($routes){
 	$routes->group('profile',function($routes){
+
+
+
 			$routes->get('view/(:num)', 'Dashboard::user_profile_view/$1',['filter'=>'auth']);
 			$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 			$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
+
 	});
 	$routes->group('courses', function($routes){
 			$routes->get('/view', 'User\Dashboard::user_courses',['filter'=>'auth']);
@@ -104,7 +108,7 @@ $routes->group('student',function($routes){
 	$routes->group('grades',function($routes){
 			$routes->get('/view', 'Dashboard::student_grades',['filter'=>'auth']);
 	});
-	$routes->group('payment',function($routes){
+	$routes->group('payments',function($routes){
 			$routes->get('/view', 'Dashboard::student_payments',['filter'=>'auth']);
 	});
 	$routes->group('childs',function($routes){
@@ -157,75 +161,80 @@ $routes->get('/staff_payments', 'Dashboard::staff_payment_views',['filter'=>'aut
 
 
 
-$routes->group('admin',function($routes){
-			$routes->group('user',function($routes){
-						$routes->get('/view', 'Dashboard::admin_user_views',['filter'=>'auth']);
-					//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
-					//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 
+
+$routes->group('admin',function($routes){
+			// users curd operations
+			$routes->group('users',function($routes){
+						$routes->add('view', 'Dashboard::admin_user_views',['filter'=>'auth']); //admin users view
+						$routes->match(['get','post'],'create', 'Admin\Users::create_users',['filter'=>'auth']); // admin create users
+						$routes->match(['get','post'],'edit/(:num)', 'Admin\Users::edit_users/$1',['filter'=>'auth']); // admin edit users
+						$routes->match(['get','post'],'activate/(:num)', 'Admin\Users::activate_user/$1',['filter'=>'auth']);
+						$routes->match(['get','post'],'deactivate/(:num)', 'Admin\Users::deactivate_user/$1',['filter'=>'auth']);
 			});
+				// students curd operations
 			$routes->group('students',function($routes){
-						$routes->get('/view', 'Dashboard::admin_student_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_student_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('parents',function($routes){
-						$routes->get('/view', 'Dashboard::admin_parent_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_parent_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('childs',function($routes){
-						$routes->get('/view', 'Dashboard::admin_child_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_child_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('teachers',function($routes){
-						$routes->get('/view', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_teacher_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('staff',function($routes){
-						$routes->get('/view', 'Dashboard::admin_staff_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_staff_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
-			$routes->group('course',function($routes){
-						$routes->get('/view', 'Dashboard::admin_course_views',['filter'=>'auth']);
+			$routes->group('courses',function($routes){
+						$routes->get('view', 'Dashboard::admin_course_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
-			$routes->group('schedule',function($routes){
-						$routes->get('/view', 'Dashboard::admin_schedule_views',['filter'=>'auth']);
+			$routes->group('schedules',function($routes){
+						$routes->get('view', 'Dashboard::admin_schedule_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('batches',function($routes){
-						$routes->get('/view', 'Dashboard::admin_batch_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_batch_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('grades',function($routes){
-						$routes->get('/view', 'Dashboard::admin_grade_views',['filter'=>'auth']);
-						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
-						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
-			});
-			$routes->group('user',function($routes){
-						$routes->get('/view', 'Dashboard::admin_payment_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_grade_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('attendance',function($routes){
-						$routes->get('/view', 'Dashboard::admin_attendance_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_attendance_views',['filter'=>'auth']);
+						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
+						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
+			});
+			$routes->group('payments',function($routes){
+						$routes->get('view', 'Dashboard::admin_payment_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('reports',function($routes){
-						$routes->get('/view', 'Dashboard::admin_report_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_report_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
 			$routes->group('settings',function($routes){
-						$routes->get('/view', 'Dashboard::admin_setting_views',['filter'=>'auth']);
+						$routes->get('view', 'Dashboard::admin_setting_views',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'create', 'Users::create_profile',['filter'=>'auth']);
 						//	$routes->match(['get','post'],'edit/(:num)', 'Users::edit_profile/$1',['filter'=>'auth']);
 			});
